@@ -37,7 +37,7 @@ export default defineNuxtConfig({
       redirectOn: 'root',
       useCookie: true,
     },
-    langDir: 'locales/',
+    langDir: 'locales',
     locales: [
       { code: 'ko', file: 'ko.json', name: '한국어' },
       { code: 'en', file: 'en.json', name: 'English' },
@@ -74,13 +74,22 @@ export default defineNuxtConfig({
         process.env.NODE_ENV === 'production'
           ? 'https://your-domain.com/api'
           : 'http://localhost:8787/api',
-      supabaseAnonKey: process.env.SUPABASE_ANON_KEY,
-      supabaseUrl: process.env.SUPABASE_URL,
+      supabaseAnonKey: process.env.SUPABASE_ANON_KEY || '',
+      supabaseUrl: process.env.SUPABASE_URL || '',
     },
     sessionSecret: process.env.SESSION_SECRET,
     supabaseServiceKey: process.env.SUPABASE_SERVICE_ROLE_KEY,
+  },
 
-    // 서버 사이드에서만 접근 가능
-    supabaseUrl: process.env.SUPABASE_URL,
+  // Supabase 설정
+  supabase: {
+    key: process.env.SUPABASE_ANON_KEY,
+    redirectOptions: {
+      callback: '/confirm',
+      exclude: ['/'],
+      login: '/login',
+    },
+    secretKey: process.env.SESSION_SECRET,
+    url: process.env.SUPABASE_URL,
   },
 })

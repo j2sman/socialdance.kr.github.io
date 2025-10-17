@@ -1,5 +1,7 @@
 {
   "common": {
+    "adminInquiry": "관리자 문의",
+    "latinDance": "라틴댄스",
     "save": "저장",
     "cancel": "취소",
     "delete": "삭제",
@@ -32,7 +34,6 @@
   "home": {
     "title": "홈",
     "welcome": "환영합니다",
-    "stats": "통계",
     "sales": "매출",
     "chart": "차트",
     "period": "기간",
@@ -141,10 +142,6 @@
     "phone": "올바른 전화번호를 입력해주세요",
     "minLength": "최소 {min}자 이상 입력해주세요",
     "maxLength": "최대 {max}자까지 입력 가능합니다"
-  },
-  "common": {
-    "latinDance": "라틴댄스",
-    "adminInquiry": "관리자 문의"
   },
   "footer": {
     "about": {

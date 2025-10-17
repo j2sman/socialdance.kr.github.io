@@ -1,5 +1,7 @@
 {
   "common": {
+    "adminInquiry": "Admin Inquiry",
+    "latinDance": "Latin Dance",
     "save": "Save",
     "cancel": "Cancel",
     "delete": "Delete",
@@ -32,7 +34,6 @@
   "home": {
     "title": "Home",
     "welcome": "Welcome",
-    "stats": "Statistics",
     "sales": "Sales",
     "chart": "Chart",
     "period": "Period",
@@ -141,10 +142,6 @@
     "phone": "Please enter a valid phone number",
     "minLength": "Please enter at least {min} characters",
     "maxLength": "Maximum {max} characters allowed"
-  },
-  "common": {
-    "latinDance": "Latin Dance",
-    "adminInquiry": "Admin Inquiry"
   },
   "footer": {
     "about": {

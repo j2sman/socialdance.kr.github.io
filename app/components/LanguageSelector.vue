@@ -3,7 +3,7 @@
     <UButton
       :label="currentLanguage.name"
       variant="ghost"
-      color="gray"
+      color="neutral"
       :icon="isOpen ? 'i-heroicons-chevron-up' : 'i-heroicons-chevron-down'"
       @click="isOpen = !isOpen"
     />

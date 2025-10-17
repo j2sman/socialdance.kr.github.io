@@ -300,12 +300,12 @@ CREATE POLICY "Admins can update update requests"
 </template>
 
 <script setup lang="ts">
-const { getAdminChatUrl } = useSiteSettings();
+const { getAdminChatUrl } = useSiteSettings()
 
 const openAdminChat = async () => {
-  const url = await getAdminChatUrl();
-  window.open(url, "_blank");
-};
+  const url = await getAdminChatUrl()
+  window.open(url, '_blank')
+}
 </script>
 ```
 
@@ -361,12 +361,12 @@ const openAdminChat = async () => {
 </template>
 
 <script setup lang="ts">
-const { getAdminChatUrl } = useSiteSettings();
+const { getAdminChatUrl } = useSiteSettings()
 
 const openAdminChat = async () => {
-  const url = await getAdminChatUrl();
-  window.open(url, "_blank");
-};
+  const url = await getAdminChatUrl()
+  window.open(url, '_blank')
+}
 </script>
 ```
 
@@ -403,29 +403,29 @@ const openAdminChat = async () => {
 </template>
 
 <script setup lang="ts">
-const { updateAdminChatUrl, getAdminChatUrl } = useSiteSettings();
+const { updateAdminChatUrl, getAdminChatUrl } = useSiteSettings()
 
 const form = reactive({
-  adminChatUrl: "",
-});
+  adminChatUrl: '',
+})
 
-const loading = ref(false);
+const loading = ref(false)
 
 onMounted(async () => {
-  form.adminChatUrl = await getAdminChatUrl();
-});
+  form.adminChatUrl = await getAdminChatUrl()
+})
 
 const onSubmit = async () => {
-  loading.value = true;
+  loading.value = true
   try {
-    await updateAdminChatUrl(form.adminChatUrl);
+    await updateAdminChatUrl(form.adminChatUrl)
     // 성공 토스트
   } catch (error) {
     // 에러 토스트
   } finally {
-    loading.value = false;
+    loading.value = false
   }
-};
+}
 </script>
 ```
 
@@ -438,33 +438,33 @@ const onSubmit = async () => {
 ```typescript
 // composables/useSiteSettings.ts
 export const useSiteSettings = () => {
-  const supabase = useSupabaseClient();
+  const supabase = useSupabaseClient()
 
   const getAdminChatUrl = async () => {
     const { data, error } = await supabase
-      .from("site_settings")
-      .select("value")
-      .eq("key", "admin_openchat_url")
-      .single();
+      .from('site_settings')
+      .select('value')
+      .eq('key', 'admin_openchat_url')
+      .single()
 
-    if (error) throw error;
-    return data.value;
-  };
+    if (error) throw error
+    return data.value
+  }
 
   const updateAdminChatUrl = async (url: string) => {
     const { error } = await supabase
-      .from("site_settings")
+      .from('site_settings')
       .update({ value: url, updated_at: new Date().toISOString() })
-      .eq("key", "admin_openchat_url");
+      .eq('key', 'admin_openchat_url')
 
-    if (error) throw error;
-  };
+    if (error) throw error
+  }
 
   return {
     getAdminChatUrl,
     updateAdminChatUrl,
-  };
-};
+  }
+}
 ```
 
 ---
@@ -497,50 +497,50 @@ Database → Supabase (Edge Functions)
 // worker/index.ts
 export default {
   async fetch(request: Request, env: Env): Promise<Response> {
-    const url = new URL(request.url);
-    const path = url.pathname;
+    const url = new URL(request.url)
+    const path = url.pathname
 
     // API 라우팅
-    if (path.startsWith("/api/")) {
-      return handleApiRequest(request, env);
+    if (path.startsWith('/api/')) {
+      return handleApiRequest(request, env)
     }
 
     // 정적 파일 서빙 (Cloudflare Pages)
-    return fetch(request);
+    return fetch(request)
   },
-};
+}
 
 async function handleApiRequest(request: Request, env: Env): Promise<Response> {
-  const url = new URL(request.url);
-  const method = request.method;
-  const path = url.pathname;
+  const url = new URL(request.url)
+  const method = request.method
+  const path = url.pathname
 
   // CORS 헤더 설정
   const corsHeaders = {
-    "Access-Control-Allow-Origin": "*",
-    "Access-Control-Allow-Methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS",
-    "Access-Control-Allow-Headers": "Content-Type, Authorization",
-  };
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Methods': 'GET, POST, PUT, PATCH, DELETE, OPTIONS',
+    'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+  }
 
   // OPTIONS 요청 처리
-  if (method === "OPTIONS") {
-    return new Response(null, { status: 200, headers: corsHeaders });
+  if (method === 'OPTIONS') {
+    return new Response(null, { status: 200, headers: corsHeaders })
   }
 
   // API 라우팅
   switch (true) {
-    case path.startsWith("/api/settings"):
-      return handleSettingsAPI(request, env);
-    case path.startsWith("/api/clubs"):
-      return handleClubsAPI(request, env);
-    case path.startsWith("/api/bars"):
-      return handleBarsAPI(request, env);
-    case path.startsWith("/api/admin"):
-      return handleAdminAPI(request, env);
-    case path.startsWith("/api/images"):
-      return handleImagesAPI(request, env);
+    case path.startsWith('/api/settings'):
+      return handleSettingsAPI(request, env)
+    case path.startsWith('/api/clubs'):
+      return handleClubsAPI(request, env)
+    case path.startsWith('/api/bars'):
+      return handleBarsAPI(request, env)
+    case path.startsWith('/api/admin'):
+      return handleAdminAPI(request, env)
+    case path.startsWith('/api/images'):
+      return handleImagesAPI(request, env)
     default:
-      return new Response("Not Found", { status: 404, headers: corsHeaders });
+      return new Response('Not Found', { status: 404, headers: corsHeaders })
   }
 }
 ```
@@ -550,15 +550,15 @@ async function handleApiRequest(request: Request, env: Env): Promise<Response> {
 ```typescript
 // worker/types.ts
 export interface Env {
-  SUPABASE_URL: string;
-  SUPABASE_ANON_KEY: string;
-  SUPABASE_SERVICE_ROLE_KEY: string;
-  GOOGLE_CALENDAR_API_KEY: string;
-  KAKAO_MAP_API_KEY: string;
-  NAVER_MAP_CLIENT_ID: string;
-  NAVER_MAP_CLIENT_SECRET: string;
-  GOOGLE_MAPS_API_KEY: string;
-  SESSION_SECRET: string;
+  SUPABASE_URL: string
+  SUPABASE_ANON_KEY: string
+  SUPABASE_SERVICE_ROLE_KEY: string
+  GOOGLE_CALENDAR_API_KEY: string
+  KAKAO_MAP_API_KEY: string
+  NAVER_MAP_CLIENT_ID: string
+  NAVER_MAP_CLIENT_SECRET: string
+  GOOGLE_MAPS_API_KEY: string
+  SESSION_SECRET: string
 }
 ```
 
@@ -566,14 +566,14 @@ export interface Env {
 
 ```typescript
 // worker/lib/supabase.ts
-import { createClient } from "@supabase/supabase-js";
+import { createClient } from '@supabase/supabase-js'
 
 export function createSupabaseClient(env: Env) {
-  return createClient(env.SUPABASE_URL, env.SUPABASE_ANON_KEY);
+  return createClient(env.SUPABASE_URL, env.SUPABASE_ANON_KEY)
 }
 
 export function createSupabaseAdminClient(env: Env) {
-  return createClient(env.SUPABASE_URL, env.SUPABASE_SERVICE_ROLE_KEY);
+  return createClient(env.SUPABASE_URL, env.SUPABASE_SERVICE_ROLE_KEY)
 }
 
 // RLS 우회를 위한 관리자 클라이언트
@@ -583,7 +583,7 @@ export function createSupabaseServiceClient(env: Env) {
       autoRefreshToken: false,
       persistSession: false,
     },
-  });
+  })
 }
 ```
 
@@ -597,16 +597,16 @@ export async function uploadImage(
   entityId: string,
   env: Env
 ): Promise<string> {
-  const fileName = `${entityType}/${entityId}/${Date.now()}-${file.name}`;
+  const fileName = `${entityType}/${entityId}/${Date.now()}-${file.name}`
 
   // 파일을 ArrayBuffer로 변환
-  const arrayBuffer = await file.arrayBuffer();
-  const fileData = new Uint8Array(arrayBuffer);
+  const arrayBuffer = await file.arrayBuffer()
+  const fileData = new Uint8Array(arrayBuffer)
 
   // Supabase에 이미지 데이터 저장
-  const supabase = createSupabaseServiceClient(env);
+  const supabase = createSupabaseServiceClient(env)
   const { data, error } = await supabase
-    .from("images")
+    .from('images')
     .insert({
       entity_type: entityType,
       entity_id: entityId,
@@ -616,37 +616,37 @@ export async function uploadImage(
       mime_type: file.type,
     })
     .select()
-    .single();
+    .single()
 
-  if (error) throw error;
+  if (error) throw error
 
-  return `/api/images/${data.id}`;
+  return `/api/images/${data.id}`
 }
 
 export async function deleteImage(imageId: string, env: Env): Promise<void> {
-  const supabase = createSupabaseServiceClient(env);
-  const { error } = await supabase.from("images").delete().eq("id", imageId);
+  const supabase = createSupabaseServiceClient(env)
+  const { error } = await supabase.from('images').delete().eq('id', imageId)
 
-  if (error) throw error;
+  if (error) throw error
 }
 
 export async function getImage(
   imageId: string,
   env: Env
 ): Promise<{ data: Uint8Array; mimeType: string } | null> {
-  const supabase = createSupabaseServiceClient(env);
+  const supabase = createSupabaseServiceClient(env)
   const { data, error } = await supabase
-    .from("images")
-    .select("file_data, mime_type")
-    .eq("id", imageId)
-    .single();
+    .from('images')
+    .select('file_data, mime_type')
+    .eq('id', imageId)
+    .single()
 
-  if (error || !data) return null;
+  if (error || !data) return null
 
   return {
     data: data.file_data,
     mimeType: data.mime_type,
-  };
+  }
 }
 ```
 
@@ -660,14 +660,14 @@ export async function getCachedData(
   key: string,
   env: Env
 ): Promise<any | null> {
-  const cache = caches.default;
-  const cacheKey = new Request(`https://cache.internal/${key}`);
-  const cachedResponse = await cache.match(cacheKey);
+  const cache = caches.default
+  const cacheKey = new Request(`https://cache.internal/${key}`)
+  const cachedResponse = await cache.match(cacheKey)
 
   if (cachedResponse) {
-    return await cachedResponse.json();
+    return await cachedResponse.json()
   }
-  return null;
+  return null
 }
 
 export async function setCachedData(
@@ -676,16 +676,16 @@ export async function setCachedData(
   ttl: number = 300, // 5분
   env: Env
 ): Promise<void> {
-  const cache = caches.default;
-  const cacheKey = new Request(`https://cache.internal/${key}`);
+  const cache = caches.default
+  const cacheKey = new Request(`https://cache.internal/${key}`)
   const response = new Response(JSON.stringify(data), {
     headers: {
-      "Cache-Control": `max-age=${ttl}`,
-      "Content-Type": "application/json",
+      'Cache-Control': `max-age=${ttl}`,
+      'Content-Type': 'application/json',
     },
-  });
+  })
 
-  await cache.put(cacheKey, response);
+  await cache.put(cacheKey, response)
 }
 ```
 
@@ -697,19 +697,19 @@ export async function handleClubsAPI(
   request: Request,
   env: Env
 ): Promise<Response> {
-  const url = new URL(request.url);
-  const method = request.method;
+  const url = new URL(request.url)
+  const method = request.method
 
-  if (method === "GET") {
+  if (method === 'GET') {
     // 캐시에서 먼저 확인
-    const cacheKey = "clubs:approved";
-    let clubs = await getCachedData(cacheKey, env);
+    const cacheKey = 'clubs:approved'
+    let clubs = await getCachedData(cacheKey, env)
 
     if (!clubs) {
       // Supabase에서 데이터 조회
-      const supabase = createSupabaseClient(env);
+      const supabase = createSupabaseClient(env)
       const { data, error } = await supabase
-        .from("clubs")
+        .from('clubs')
         .select(
           `
           *,
@@ -717,57 +717,57 @@ export async function handleClubsAPI(
           images(*)
         `
         )
-        .eq("status", "approved")
-        .order("created_at", { ascending: false });
+        .eq('status', 'approved')
+        .order('created_at', { ascending: false })
 
       if (error) {
         return new Response(JSON.stringify({ error: error.message }), {
           status: 500,
-          headers: { "Content-Type": "application/json" },
-        });
+          headers: { 'Content-Type': 'application/json' },
+        })
       }
 
-      clubs = data;
+      clubs = data
       // 5분간 캐시
-      await setCachedData(cacheKey, clubs, 300, env);
+      await setCachedData(cacheKey, clubs, 300, env)
     }
 
     return new Response(JSON.stringify({ data: clubs }), {
-      headers: { "Content-Type": "application/json" },
-    });
+      headers: { 'Content-Type': 'application/json' },
+    })
   }
 
-  if (method === "POST") {
+  if (method === 'POST') {
     // 동호회 등록 로직
-    const body = await request.json();
-    const supabase = createSupabaseClient(env);
+    const body = await request.json()
+    const supabase = createSupabaseClient(env)
 
     const { data, error } = await supabase
-      .from("clubs")
+      .from('clubs')
       .insert({
         ...body,
-        status: "pending",
+        status: 'pending',
       })
       .select()
-      .single();
+      .single()
 
     if (error) {
       return new Response(JSON.stringify({ error: error.message }), {
         status: 400,
-        headers: { "Content-Type": "application/json" },
-      });
+        headers: { 'Content-Type': 'application/json' },
+      })
     }
 
     // 캐시 무효화
-    await invalidateCache("clubs:approved", env);
+    await invalidateCache('clubs:approved', env)
 
     return new Response(JSON.stringify({ data }), {
       status: 201,
-      headers: { "Content-Type": "application/json" },
-    });
+      headers: { 'Content-Type': 'application/json' },
+    })
   }
 
-  return new Response("Method Not Allowed", { status: 405 });
+  return new Response('Method Not Allowed', { status: 405 })
 }
 
 // 이미지 API 핸들러
@@ -775,35 +775,35 @@ export async function handleImagesAPI(
   request: Request,
   env: Env
 ): Promise<Response> {
-  const url = new URL(request.url);
-  const method = request.method;
-  const path = url.pathname;
+  const url = new URL(request.url)
+  const method = request.method
+  const path = url.pathname
 
-  if (method === "GET") {
+  if (method === 'GET') {
     // 이미지 ID 추출
-    const imageId = path.split("/").pop();
+    const imageId = path.split('/').pop()
     if (!imageId) {
-      return new Response("Image ID required", { status: 400 });
+      return new Response('Image ID required', { status: 400 })
     }
 
     try {
-      const imageData = await getImage(imageId, env);
+      const imageData = await getImage(imageId, env)
       if (!imageData) {
-        return new Response("Image not found", { status: 404 });
+        return new Response('Image not found', { status: 404 })
       }
 
       return new Response(imageData.data, {
         headers: {
-          "Content-Type": imageData.mimeType,
-          "Cache-Control": "public, max-age=31536000", // 1년 캐시
+          'Content-Type': imageData.mimeType,
+          'Cache-Control': 'public, max-age=31536000', // 1년 캐시
         },
-      });
+      })
     } catch (error) {
-      return new Response("Internal Server Error", { status: 500 });
+      return new Response('Internal Server Error', { status: 500 })
     }
   }
 
-  return new Response("Method Not Allowed", { status: 405 });
+  return new Response('Method Not Allowed', { status: 405 })
 }
 ```
 
@@ -830,7 +830,7 @@ vars = { ENVIRONMENT = "staging" }
 // nuxt.config.ts
 export default defineNuxtConfig({
   nitro: {
-    preset: "cloudflare-pages",
+    preset: 'cloudflare-pages',
     experimental: {
       wasm: true,
     },
@@ -838,12 +838,12 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       apiBase:
-        process.env.NODE_ENV === "production"
-          ? "https://your-domain.com/api"
-          : "http://localhost:8787/api",
+        process.env.NODE_ENV === 'production'
+          ? 'https://your-domain.com/api'
+          : 'http://localhost:8787/api',
     },
   },
-});
+})
 ```
 
 ### 7.5 배포 워크플로우
@@ -867,7 +867,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: "18"
+          node-version: '18'
 
       - name: Install dependencies
         run: npm ci
@@ -1017,30 +1017,30 @@ PUT /api/admin/bars/:id - 라틴바 정보 수정
 ```typescript
 // composables/useAdminAuth.ts
 export const useAdminAuth = () => {
-  const isAdmin = useState("isAdmin", () => false);
-  const adminEmail = useState("adminEmail", () => "");
+  const isAdmin = useState('isAdmin', () => false)
+  const adminEmail = useState('adminEmail', () => '')
 
   const login = async (email: string, password: string) => {
     // Supabase RPC로 bcrypt 검증
-    const { data, error } = await supabase.rpc("verify_admin", {
+    const { data, error } = await supabase.rpc('verify_admin', {
       p_email: email,
       p_password: password,
-    });
+    })
 
     if (data) {
-      isAdmin.value = true;
-      adminEmail.value = email;
+      isAdmin.value = true
+      adminEmail.value = email
       // 세션 저장
     }
-  };
+  }
 
   const logout = () => {
-    isAdmin.value = false;
-    adminEmail.value = "";
-  };
+    isAdmin.value = false
+    adminEmail.value = ''
+  }
 
-  return { isAdmin, adminEmail, login, logout };
-};
+  return { isAdmin, adminEmail, login, logout }
+}
 ```
 
 ### 11.2 Supabase Function (비밀번호 검증)
@@ -1155,35 +1155,35 @@ $$ LANGUAGE plpgsql SECURITY DEFINER;
 
 <script setup lang="ts">
 const props = defineProps<{
-  modelValue: string[];
-}>();
+  modelValue: string[]
+}>()
 
 const emit = defineEmits<{
-  "update:modelValue": [value: string[]];
-}>();
+  'update:modelValue': [value: string[]]
+}>()
 
 const selectedTypes = computed({
   get: () => props.modelValue || [],
-  set: (value) => emit("update:modelValue", value),
-});
+  set: value => emit('update:modelValue', value),
+})
 
 const danceTypeOptions = [
-  { label: "살사 (Salsa)", value: "salsa" },
-  { label: "바차타 (Bachata)", value: "bachata" },
-  { label: "주크 (Zouk)", value: "zouk" },
-  { label: "차차차 (Cha Cha Cha)", value: "chachacha" },
-  { label: "룸바 (Rumba)", value: "rumba" },
-  { label: "삼바 (Samba)", value: "samba" },
-  { label: "파소도블 (Paso Doble)", value: "pasodoble" },
-  { label: "자이브 (Jive)", value: "jive" },
-  { label: "메렝게 (Merengue)", value: "merengue" },
-  { label: "기타", value: "other" },
-];
+  { label: '살사 (Salsa)', value: 'salsa' },
+  { label: '바차타 (Bachata)', value: 'bachata' },
+  { label: '주크 (Zouk)', value: 'zouk' },
+  { label: '차차차 (Cha Cha Cha)', value: 'chachacha' },
+  { label: '룸바 (Rumba)', value: 'rumba' },
+  { label: '삼바 (Samba)', value: 'samba' },
+  { label: '파소도블 (Paso Doble)', value: 'pasodoble' },
+  { label: '자이브 (Jive)', value: 'jive' },
+  { label: '메렝게 (Merengue)', value: 'merengue' },
+  { label: '기타', value: 'other' },
+]
 
 const getDanceTypeLabel = (value: string) => {
-  const option = danceTypeOptions.find((opt) => opt.value === value);
-  return option ? option.label : value;
-};
+  const option = danceTypeOptions.find(opt => opt.value === value)
+  return option ? option.label : value
+}
 </script>
 ```
 
@@ -1240,70 +1240,70 @@ const getDanceTypeLabel = (value: string) => {
 
 <script setup lang="ts">
 const props = defineProps<{
-  modelValue: File[];
-}>();
+  modelValue: File[]
+}>()
 
 const emit = defineEmits<{
-  "update:modelValue": [value: File[]];
-}>();
+  'update:modelValue': [value: File[]]
+}>()
 
-const images = ref<File[]>(props.modelValue || []);
-const isDragOver = ref(false);
-const fileInput = ref<HTMLInputElement>();
+const images = ref<File[]>(props.modelValue || [])
+const isDragOver = ref(false)
+const fileInput = ref<HTMLInputElement>()
 
 const selectFiles = () => {
-  fileInput.value?.click();
-};
+  fileInput.value?.click()
+}
 
 const handleFileSelect = (event: Event) => {
-  const target = event.target as HTMLInputElement;
+  const target = event.target as HTMLInputElement
   if (target.files) {
-    addFiles(Array.from(target.files));
+    addFiles(Array.from(target.files))
   }
-};
+}
 
 const handleDrop = (event: DragEvent) => {
-  event.preventDefault();
-  isDragOver.value = false;
+  event.preventDefault()
+  isDragOver.value = false
 
   if (event.dataTransfer?.files) {
-    addFiles(Array.from(event.dataTransfer.files));
+    addFiles(Array.from(event.dataTransfer.files))
   }
-};
+}
 
 const addFiles = (files: File[]) => {
-  const imageFiles = files.filter((file) => file.type.startsWith("image/"));
-  const newImages = [...images.value, ...imageFiles];
+  const imageFiles = files.filter(file => file.type.startsWith('image/'))
+  const newImages = [...images.value, ...imageFiles]
 
   // 미리보기 URL 생성
-  newImages.forEach((file) => {
+  newImages.forEach(file => {
     if (!file.preview) {
-      file.preview = URL.createObjectURL(file);
+      file.preview = URL.createObjectURL(file)
     }
-  });
+  })
 
-  images.value = newImages;
-  emit("update:modelValue", images.value);
-};
+  images.value = newImages
+  emit('update:modelValue', images.value)
+}
 
 const removeImage = (index: number) => {
-  const file = images.value[index];
+  const file = images.value[index]
   if (file.preview) {
-    URL.revokeObjectURL(file.preview);
+    URL.revokeObjectURL(file.preview)
   }
 
-  images.value.splice(index, 1);
-  emit("update:modelValue", images.value);
-};
+  images.value.splice(index, 1)
+  emit('update:modelValue', images.value)
+}
 
 // 컴포넌트 언마운트 시 URL 정리
 onUnmounted(() => {
-  images.value.forEach((file) => {
+  images.value.forEach(file => {
     if (file.preview) {
-      URL.revokeObjectURL(file.preview);
+      URL.revokeObjectURL(file.preview)
     }
-  });
-});
+  })
+})
 </script>
 
 <style scoped>
@@ -1377,24 +1377,24 @@ onUnmounted(() => {
 
 <script setup lang="ts">
 const platformOptions = [
-  { label: "인스타그램", value: "instagram" },
-  { label: "오픈카톡", value: "kakaotalk" },
-  { label: "다음카페", value: "daumcafe" },
-  { label: "네이버카페", value: "navercafe" },
-  { label: "유튜브", value: "youtube" },
-  { label: "Notion", value: "notion" },
-  { label: "기타", value: "other" },
-];
+  { label: '인스타그램', value: 'instagram' },
+  { label: '오픈카톡', value: 'kakaotalk' },
+  { label: '다음카페', value: 'daumcafe' },
+  { label: '네이버카페', value: 'navercafe' },
+  { label: '유튜브', value: 'youtube' },
+  { label: 'Notion', value: 'notion' },
+  { label: '기타', value: 'other' },
+]
 
-const links = ref([{ platform: "", url: "", password: "" }]);
+const links = ref([{ platform: '', url: '', password: '' }])
 
 const addLink = () => {
-  links.value.push({ platform: "", url: "", password: "" });
-};
+  links.value.push({ platform: '', url: '', password: '' })
+}
 
 const removeLink = (index: number) => {
-  links.value.splice(index, 1);
-};
+  links.value.splice(index, 1)
+}
 </script>
 ```
 
@@ -1451,30 +1451,30 @@ const removeLink = (index: number) => {
 
 <script setup lang="ts">
 const form = reactive({
-  name: "",
+  name: '',
   danceTypes: [],
-  googleCalendarId: "",
+  googleCalendarId: '',
   socialLinks: [],
   images: [],
-});
+})
 
-const loading = ref(false);
+const loading = ref(false)
 
 const onSubmit = async () => {
-  loading.value = true;
+  loading.value = true
   try {
-    await $fetch("/api/clubs", {
-      method: "POST",
+    await $fetch('/api/clubs', {
+      method: 'POST',
       body: form,
-    });
-    await navigateTo("/clubs/create/success");
+    })
+    await navigateTo('/clubs/create/success')
   } catch (error) {
     // 에러 토스트
-    console.error("동호회 등록 실패:", error);
+    console.error('동호회 등록 실패:', error)
   } finally {
-    loading.value = false;
+    loading.value = false
   }
-};
+}
 </script>
 ```
 
@@ -1522,39 +1522,39 @@ const onSubmit = async () => {
 </template>
 
 <script setup lang="ts">
-const route = useRoute();
-const clubId = route.params.id;
+const route = useRoute()
+const clubId = route.params.id
 
 const form = reactive({
-  name: "",
+  name: '',
   danceTypes: [],
   socialLinks: [],
   images: [],
-  contact: "",
-});
+  contact: '',
+})
 
-const loading = ref(false);
+const loading = ref(false)
 
 onMounted(async () => {
   // 기존 데이터 로드
-  const { data } = await $fetch(`/api/clubs/${clubId}`);
-  Object.assign(form, data);
-});
+  const { data } = await $fetch(`/api/clubs/${clubId}`)
+  Object.assign(form, data)
+})
 
 const onSubmit = async () => {
-  loading.value = true;
+  loading.value = true
   try {
     await $fetch(`/api/clubs/${clubId}/request-update`, {
-      method: "POST",
+      method: 'POST',
       body: form,
-    });
-    await navigateTo(`/clubs/${clubId}/request-update/success`);
+    })
+    await navigateTo(`/clubs/${clubId}/request-update/success`)
   } catch (error) {
     // 에러 토스트
   } finally {
-    loading.value = false;
+    loading.value = false
   }
-};
+}
 </script>
 ```
 
@@ -1592,14 +1592,14 @@ const onSubmit = async () => {
 </template>
 
 <script setup lang="ts">
-const route = useRoute();
-const clubId = route.params.id;
-const { getAdminChatUrl } = useSiteSettings();
+const route = useRoute()
+const clubId = route.params.id
+const { getAdminChatUrl } = useSiteSettings()
 
 const openAdminChat = async () => {
-  const url = await getAdminChatUrl();
-  window.open(url, "_blank");
-};
+  const url = await getAdminChatUrl()
+  window.open(url, '_blank')
+}
 </script>
 ```
 
@@ -1630,7 +1630,7 @@ const openAdminChat = async () => {
               <div class="space-y-2">
                 <p>
                   <strong>요청자:</strong>
-                  {{ request.requested_by || "미입력" }}
+                  {{ request.requested_by || '미입력' }}
                 </p>
                 <p>
                   <strong>요청일:</strong> {{ formatDate(request.created_at) }}
@@ -1646,7 +1646,7 @@ const openAdminChat = async () => {
               <template #footer>
                 <div class="flex gap-2">
                   <UButton
-                    color="green"
+                    color="primary"
                     @click="approveRequest(request.id)"
                     :loading="loading === request.id"
                   >
@@ -1678,61 +1678,61 @@ const openAdminChat = async () => {
 
 <script setup lang="ts">
 const tabs = [
-  { key: "pending", label: "승인 대기", count: 0 },
-  { key: "approved", label: "승인됨", count: 0 },
-  { key: "rejected", label: "거절됨", count: 0 },
-];
+  { key: 'pending', label: '승인 대기', count: 0 },
+  { key: 'approved', label: '승인됨', count: 0 },
+  { key: 'rejected', label: '거절됨', count: 0 },
+]
 
-const selectedTab = ref("pending");
-const pendingRequests = ref([]);
-const loading = ref("");
+const selectedTab = ref('pending')
+const pendingRequests = ref([])
+const loading = ref('')
 
-const getEntityName = (request) => {
-  return request.request_data?.name || "이름 없음";
-};
+const getEntityName = request => {
+  return request.request_data?.name || '이름 없음'
+}
 
-const formatDate = (date) => {
-  return new Date(date).toLocaleDateString("ko-KR");
-};
+const formatDate = date => {
+  return new Date(date).toLocaleDateString('ko-KR')
+}
 
-const approveRequest = async (requestId) => {
-  loading.value = requestId;
+const approveRequest = async requestId => {
+  loading.value = requestId
   try {
     await $fetch(`/api/admin/update-requests/${requestId}/approve`, {
-      method: "PATCH",
-    });
+      method: 'PATCH',
+    })
     // 성공 토스트
-    await loadRequests();
+    await loadRequests()
   } catch (error) {
     // 에러 토스트
   } finally {
-    loading.value = "";
+    loading.value = ''
   }
-};
+}
 
-const rejectRequest = async (requestId) => {
-  loading.value = requestId;
+const rejectRequest = async requestId => {
+  loading.value = requestId
   try {
     await $fetch(`/api/admin/update-requests/${requestId}/reject`, {
-      method: "PATCH",
-    });
+      method: 'PATCH',
+    })
     // 성공 토스트
-    await loadRequests();
+    await loadRequests()
   } catch (error) {
     // 에러 토스트
   } finally {
-    loading.value = "";
+    loading.value = ''
   }
-};
+}
 
 const loadRequests = async () => {
-  const { data } = await $fetch("/api/admin/update-requests");
-  pendingRequests.value = data.filter((r) => r.status === "pending");
-};
+  const { data } = await $fetch('/api/admin/update-requests')
+  pendingRequests.value = data.filter(r => r.status === 'pending')
+}
 
 onMounted(() => {
-  loadRequests();
-});
+  loadRequests()
+})
 </script>
 ```
 
@@ -1774,39 +1774,39 @@ onMounted(() => {
 </template>
 
 <script setup lang="ts">
-const route = useRoute();
-const clubId = route.params.id;
+const route = useRoute()
+const clubId = route.params.id
 
 const form = reactive({
-  name: "",
+  name: '',
   danceTypes: [],
   socialLinks: [],
   images: [],
-});
+})
 
-const loading = ref(false);
+const loading = ref(false)
 
 onMounted(async () => {
   // 기존 데이터 로드
-  const { data } = await $fetch(`/api/admin/clubs/${clubId}`);
-  Object.assign(form, data);
-});
+  const { data } = await $fetch(`/api/admin/clubs/${clubId}`)
+  Object.assign(form, data)
+})
 
 const onSubmit = async () => {
-  loading.value = true;
+  loading.value = true
   try {
     await $fetch(`/api/admin/clubs/${clubId}`, {
-      method: "PUT",
+      method: 'PUT',
       body: form,
-    });
+    })
     // 성공 토스트
-    await navigateTo("/admin/clubs");
+    await navigateTo('/admin/clubs')
   } catch (error) {
     // 에러 토스트
   } finally {
-    loading.value = false;
+    loading.value = false
   }
-};
+}
 </script>
 ```
 
@@ -1969,10 +1969,13 @@ node -e "const bcrypt = require('bcrypt'); bcrypt.hash('yourpassword', 10, (err,
 
 ## 19. 참고 사항
 
-이 개발 계획서는 라틴댄스 동호회와 라틴바를 소개하는 플랫폼을 단계적으로 구현하기 위한 종합 가이드입니다.
+이 개발 계획서는 라틴댄스 동호회와 라틴바를 소개하는 플랫폼을 단계적으로
+구현하기 위한 종합 가이드입니다.
 
-**Cloudflare Worker와 Pages를 활용한 서버리스 아키텍처**로 구축하여 높은 성능과 확장성을 제공합니다.
+**Cloudflare Worker와 Pages를 활용한 서버리스 아키텍처**로 구축하여 높은 성능과
+확장성을 제공합니다.
 
 각 Phase별로 진행하며, 필요에 따라 우선순위를 조정할 수 있습니다.
 
-프로젝트 진행 중 추가 요구사항이나 변경사항이 있을 경우 이 문서를 업데이트하여 관리하시기 바랍니다.
+프로젝트 진행 중 추가 요구사항이나 변경사항이 있을 경우 이 문서를 업데이트하여
+관리하시기 바랍니다.

@@ -1,11 +1,16 @@
-import tsESLint from '@typescript-eslint/eslint-plugin';
-import tsESLintParser from '@typescript-eslint/parser';
-import prettierPlugin from 'eslint-plugin-prettier';
-import importPlugin from 'eslint-plugin-import';
-import nodePlugin from 'eslint-plugin-node';
-import sortPropertiesPlugin from 'eslint-plugin-sort-properties';
+import tsESLint from '@typescript-eslint/eslint-plugin'
+import tsESLintParser from '@typescript-eslint/parser'
+import prettierPlugin from 'eslint-plugin-prettier'
+import importPlugin from 'eslint-plugin-import'
+import nodePlugin from 'eslint-plugin-node'
+import sortPropertiesPlugin from 'eslint-plugin-sort-properties'
 
 export default [
+  // .nuxt 폴더 완전 제외
+  {
+    ignores: ['.nuxt/**', '.nuxt/**/*', '.nuxt/**/**'],
+  },
+
   // 기본 설정
   {
     ignores: [
@@ -109,7 +114,6 @@ export default [
     },
     rules: {
       '@typescript-eslint/explicit-function-return-type': 'off',
-      '@typescript-eslint/no-explicit-any': 'off',
       '@typescript-eslint/no-unused-vars': 'off',
       'prettier/prettier': 'error',
       'import/order': [
@@ -161,7 +165,6 @@ export default [
     },
     rules: {
       '@typescript-eslint/explicit-function-return-type': 'off',
-      '@typescript-eslint/no-explicit-any': 'off',
       '@typescript-eslint/no-unused-vars': 'off',
       'prettier/prettier': 'error',
       'import/order': [
@@ -215,7 +218,6 @@ export default [
     files: ['**/*.test.js', '**/*.test.ts', '**/*.spec.js', '**/*.spec.ts'],
     rules: {
       'no-console': 'off', // 테스트에서는 console 허용
-      '@typescript-eslint/no-explicit-any': 'off',
     },
   },
-];
+]
