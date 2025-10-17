@@ -7,7 +7,7 @@
             <h1 class="text-3xl font-bold">동호회 목록</h1>
             <p class="text-neutral-600 mt-2">전국의 라틴댄스 동호회를 찾아보세요</p>
           </div>
-          <UButton to="/clubs/create" color="primary" icon="i-heroicons-plus">
+          <UButton :to="`/${locale}/clubs/create`" color="primary" icon="i-heroicons-plus">
             동호회 등록
           </UButton>
         </div>
@@ -24,7 +24,7 @@
               />
               <USelect
                 v-model="selectedDanceType"
-                :options="danceTypeFilterOptions"
+                :items="danceTypeFilterOptions"
                 placeholder="댄스 타입 필터"
                 class="w-full md:w-48"
               />
@@ -43,7 +43,7 @@
           <UIcon name="i-heroicons-users" class="w-16 h-16 text-neutral-400 mx-auto mb-4" />
           <h3 class="text-xl font-semibold mb-2">등록된 동호회가 없습니다</h3>
           <p class="text-neutral-600 mb-6">첫 번째 동호회를 등록해보세요!</p>
-          <UButton to="/clubs/create" color="primary" icon="i-heroicons-plus">
+          <UButton :to="`/${locale}/clubs/create`" color="primary" icon="i-heroicons-plus">
             동호회 등록하기
           </UButton>
         </div>
@@ -128,28 +128,19 @@
 
 <script setup lang="ts">
 import type { Club, DanceType, SocialPlatform } from '~/types'
+import { DANCE_TYPE_OPTIONS } from '~/types/common.types'
 
 const { getClubs } = useClubs()
-
+const { locale } = useI18n()
 const clubs = ref<Club[]>([])
 const pending = ref(true)
 const searchQuery = ref('')
-const selectedDanceType = ref('')
+const selectedDanceType = ref<DanceType>('all')
 
-const danceTypeOptions = [
-  { label: '살사 (Salsa)', value: 'salsa' },
-  { label: '바차타 (Bachata)', value: 'bachata' },
-  { label: '주크 (Zouk)', value: 'zouk' },
-  { label: '차차차 (Cha Cha Cha)', value: 'chachacha' },
-  { label: '룸바 (Rumba)', value: 'rumba' },
-  { label: '삼바 (Samba)', value: 'samba' },
-  { label: '파소도블 (Paso Doble)', value: 'pasodoble' },
-  { label: '자이브 (Jive)', value: 'jive' },
-  { label: '메렝게 (Merengue)', value: 'merengue' },
-  { label: '기타', value: 'other' },
+const danceTypeFilterOptions: { label: string; value: DanceType }[] = [
+  { label: '모든 댄스 타입', value: 'all' as DanceType },
+  ...DANCE_TYPE_OPTIONS,
 ]
-
-const danceTypeFilterOptions = [{ label: '모든 댄스 타입', value: '' }, ...danceTypeOptions]
 
 const filteredClubs = computed(() => {
   let filtered = clubs.value

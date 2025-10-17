@@ -10,10 +10,10 @@
           {{ $t('home.hero.description') }}
         </p>
         <div class="flex flex-col sm:flex-row gap-4 justify-center">
-          <UButton to="/clubs" size="lg" color="primary" icon="i-heroicons-users">
+          <UButton :to="`/${locale}/clubs`" size="lg" color="primary" icon="i-heroicons-users">
             {{ $t('home.hero.findClubs') }}
           </UButton>
-          <UButton to="/bars" size="lg" variant="outline" icon="i-heroicons-building-office">
+          <UButton :to="`/${locale}/bars`" size="lg" variant="outline" icon="i-heroicons-building-office">
             {{ $t('home.hero.findBars') }}
           </UButton>
         </div>
@@ -49,8 +49,8 @@
           </UCard>
           <UCard>
             <div class="text-center">
-              <UIcon name="i-heroicons-heart" class="w-12 h-12 text-red-500 mx-auto mb-4" />
-              <h3 class="text-2xl font-bold text-red-600">
+              <UIcon name="i-heroicons-heart" class="w-12 h-12 text-error-500 mx-auto mb-4" />
+              <h3 class="text-2xl font-bold text-error-600">
                 {{ stats.total }}
               </h3>
               <p class="text-neutral-600">
@@ -81,7 +81,7 @@
             v-for="club in recentClubs.slice(0, 6)"
             :key="club.id"
             class="hover:shadow-lg transition-shadow cursor-pointer"
-            @click="navigateTo(`/clubs/${club.id}`)"
+            @click="navigateTo(`${locale}/clubs/${club.id}`)"
           >
             <template #header>
               <h3 class="text-xl font-semibold">
@@ -108,7 +108,7 @@
           </UCard>
         </div>
         <div v-if="recentClubs.length > 6" class="text-center mt-8">
-          <UButton to="/clubs" variant="outline">
+          <UButton :to="`/${locale}/clubs`" variant="outline">
             {{ $t('home.viewAllClubs') }}
           </UButton>
         </div>
@@ -137,7 +137,7 @@
             v-for="bar in recentBars.slice(0, 6)"
             :key="bar.id"
             class="hover:shadow-lg transition-shadow cursor-pointer"
-            @click="navigateTo(`/bars/${bar.id}`)"
+            @click="navigateTo(`${locale}/bars/${bar.id}`)"
           >
             <template #header>
               <h3 class="text-xl font-semibold">
@@ -153,7 +153,7 @@
           </UCard>
         </div>
         <div v-if="recentBars.length > 6" class="text-center mt-8">
-          <UButton to="/bars" variant="outline">
+          <UButton :to="`/${locale}/bars`" variant="outline">
             {{ $t('home.viewAllBars') }}
           </UButton>
         </div>
@@ -163,6 +163,12 @@
 </template>
 
 <script setup lang="ts">
+definePageMeta({
+  auth: false,
+  layout: 'default',
+  middleware: [],
+})
+
 import type { Club, LatinBar, DanceType } from '~/types'
 
 const { getClubs } = useClubs()

@@ -4,7 +4,7 @@
     <div v-for="(link, index) in links" :key="index" class="link-item">
       <USelect
         v-model="link.platform"
-        :options="platformOptions"
+        :items="SOCIAL_PLATFORM_OPTIONS"
         placeholder="플랫폼 선택"
         class="flex-1"
       />
@@ -23,6 +23,7 @@
 
 <script setup lang="ts">
 import type { SocialLink } from '~/types'
+import { SOCIAL_PLATFORM_OPTIONS } from '../types/common.types'
 
 const props = defineProps<{
   modelValue: Omit<SocialLink, 'id' | 'entity_type' | 'entity_id' | 'created_at'>[]
@@ -33,16 +34,6 @@ const emit = defineEmits<{
     value: Omit<SocialLink, 'id' | 'entity_type' | 'entity_id' | 'created_at'>[],
   ]
 }>()
-
-const platformOptions = [
-  { label: '인스타그램', value: 'instagram' },
-  { label: '오픈카톡', value: 'kakaotalk' },
-  { label: '다음카페', value: 'daumcafe' },
-  { label: '네이버카페', value: 'navercafe' },
-  { label: '유튜브', value: 'youtube' },
-  { label: 'Notion', value: 'notion' },
-  { label: '기타', value: 'other' },
-]
 
 const links = ref<Omit<SocialLink, 'id' | 'entity_type' | 'entity_id' | 'created_at'>[]>(
   props.modelValue?.length ? props.modelValue : [{ platform: 'instagram', url: '', password: '' }]
@@ -69,6 +60,8 @@ const removeLink = (index: number) => {
 
 <style scoped>
 .link-item {
-  @apply flex gap-2 mb-2;
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
 }
 </style>

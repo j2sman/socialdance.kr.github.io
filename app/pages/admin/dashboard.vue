@@ -49,8 +49,8 @@
         <!-- 빠른 액션 버튼 -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
           <UButton
-            to="/admin/clubs/pending"
-            color="blue"
+            :to="`/${locale}/admin/clubs/pending`"
+            color="primary"
             variant="outline"
             size="lg"
             class="justify-start"
@@ -60,8 +60,8 @@
           </UButton>
 
           <UButton
-            to="/admin/bars/pending"
-            color="green"
+            :to="`/${locale}/admin/bars/pending`"
+            color="success"
             variant="outline"
             size="lg"
             class="justify-start"
@@ -71,8 +71,8 @@
           </UButton>
 
           <UButton
-            to="/admin/update-requests"
-            color="orange"
+            :to="`/${locale}/admin/update-requests`"
+            color="warning"
             variant="outline"
             size="lg"
             class="justify-start"
@@ -82,8 +82,8 @@
           </UButton>
 
           <UButton
-            to="/admin/settings"
-            color="gray"
+            :to="`/${locale}/admin/settings`"
+            color="neutral"
             variant="outline"
             size="lg"
             class="justify-start"
@@ -137,9 +137,12 @@
 </template>
 
 <script setup lang="ts">
+const { locale } = useI18n()
+
 // 관리자 인증 미들웨어 적용
 definePageMeta({
-  middleware: 'admin-auth',
+  auth: true,
+  layout: 'default',
 })
 
 const { logout } = useAdminAuth()
@@ -249,9 +252,9 @@ const handleLogout = () => {
   toast.add({
     title: '로그아웃 완료',
     description: '성공적으로 로그아웃되었습니다.',
-    color: 'green',
+    color: 'success',
   })
-  navigateTo('/admin/login')
+  navigateTo(`/${locale.value}/admin/login`)
 }
 
 // 페이지 로드 시 데이터 가져오기

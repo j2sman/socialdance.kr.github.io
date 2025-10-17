@@ -43,6 +43,8 @@
 
 <script setup lang="ts">
 const { locale, locales, setLocale } = useI18n()
+const route = useRoute()
+const router = useRouter()
 
 const isOpen = ref(false)
 
@@ -52,11 +54,21 @@ const currentLanguage = computed(
 )
 
 const changeLanguage = async (newLocale: string) => {
-  await (setLocale(newLocale as 'ko' | 'en') as Promise<void>)
-  isOpen.value = false
+  try {
+    // 언어 변경
+    await setLocale(newLocale as 'ko' | 'en')
+
+    // 언어 변경 후 현재 경로로 다시 이동 (새로운 locale prefix와 함께)
+    const currentPath = route.path
+    await router.push(currentPath)
+
+    isOpen.value = false
+  } catch (error) {
+    console.error('Language change failed:', error)
+  }
 }
 
-// 외부 클릭 시 닫기
+// 외부 클릭 시 닫기 - 클라이언트에서만 실행
 onMounted(() => {
   const handleClickOutside = (event: Event) => {
     const target = event.target as HTMLElement

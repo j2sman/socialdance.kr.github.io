@@ -335,7 +335,7 @@ const openAdminChat = async () => {
 <!-- pages/clubs/create/success.vue -->
 <template>
   <div class="success-page">
-    <UIcon name="i-heroicons-check-circle" class="success-icon" />
+    <UIcon name="i-heroicons-check-circle" />
     <h1>동호회 등록이 완료되었습니다!</h1>
     <p>관리자 승인 후 사이트에 표시됩니다.</p>
 
@@ -354,8 +354,10 @@ const openAdminChat = async () => {
     </UCard>
 
     <div class="actions">
-      <UButton to="/clubs" variant="ghost">동호회 목록 보기</UButton>
-      <UButton to="/" variant="ghost">홈으로</UButton>
+      <UButton :to="`/${locale}/clubs`" variant="ghost" size="lg">
+        동호회 목록 보기
+      </UButton>
+      <UButton :to="`/${locale}/`" variant="ghost" size="lg"> 홈으로 </UButton>
     </div>
   </div>
 </template>
@@ -1308,32 +1310,66 @@ onUnmounted(() => {
 
 <style scoped>
 .upload-area {
-  @apply border-2 border-dashed border-neutral-300 rounded-lg p-8 text-center cursor-pointer transition-colors;
+  border: 2px dashed #d4d4d8;
+  border-radius: 0.5rem;
+  padding: 2rem;
+  text-align: center;
+  cursor: pointer;
+  transition-property:
+    color, background-color, border-color, text-decoration-color, fill, stroke;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
 }
 
 .upload-area:hover,
 .upload-area.drag-over {
-  @apply border-success-500 bg-success-50;
+  border-color: #10b981;
+  background-color: #ecfdf5;
 }
 
 .upload-icon {
-  @apply w-12 h-12 text-neutral-400 mx-auto mb-4;
+  width: 3rem;
+  height: 3rem;
+  color: #a3a3a3;
+  margin: 0 auto 1rem;
 }
 
 .image-preview {
-  @apply grid grid-cols-2 md:grid-cols-4 gap-4 mt-4;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+@media (min-width: 768px) {
+  .image-preview {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
 }
 
 .image-item {
-  @apply relative group;
+  position: relative;
 }
 
 .image-item img {
-  @apply w-full h-32 object-cover rounded-lg;
+  width: 100%;
+  height: 8rem;
+  object-fit: cover;
+  border-radius: 0.5rem;
 }
 
 .image-item button {
-  @apply absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity;
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  opacity: 0;
+  transition-property: opacity;
+  transition-timing-function: cubic-bezier(0.4, 0, 0 0.2, 1);
+  transition-duration: 150ms;
+}
+
+.image-item:hover button {
+  opacity: 1;
 }
 </style>
 ```
@@ -1348,7 +1384,7 @@ onUnmounted(() => {
     <div v-for="(link, index) in links" :key="index" class="link-item">
       <USelect
         v-model="link.platform"
-        :options="platformOptions"
+        :items="platformOptions"
         placeholder="플랫폼 선택"
         class="flex-1"
       />
@@ -1442,7 +1478,7 @@ const removeLink = (index: number) => {
           <UButton type="submit" :loading="loading" size="lg">
             동호회 등록
           </UButton>
-          <UButton to="/clubs" variant="ghost"> 목록으로 </UButton>
+          <UButton :to="`/${locale}/clubs`" variant="ghost"> 목록으로 </UButton>
         </div>
       </UForm>
     </UCard>
@@ -1450,6 +1486,8 @@ const removeLink = (index: number) => {
 </template>
 
 <script setup lang="ts">
+const { locale } = useI18n()
+
 const form = reactive({
   name: '',
   danceTypes: [],
@@ -1514,7 +1552,7 @@ const onSubmit = async () => {
 
         <div class="actions">
           <UButton type="submit" :loading="loading"> 수정 요청 </UButton>
-          <UButton to="/clubs" variant="ghost"> 목록으로 </UButton>
+          <UButton :to="`/${locale}/clubs`" variant="ghost"> 목록으로 </UButton>
         </div>
       </UForm>
     </UCard>
@@ -1564,7 +1602,7 @@ const onSubmit = async () => {
 <!-- pages/clubs/[id]/request-update/success.vue -->
 <template>
   <div class="success-page">
-    <UIcon name="i-heroicons-check-circle" class="success-icon" />
+    <UIcon name="i-heroicons-check-circle" />
     <h1>수정 요청이 완료되었습니다!</h1>
     <p>관리자 승인 후 수정사항이 반영됩니다.</p>
 
@@ -1583,10 +1621,12 @@ const onSubmit = async () => {
     </UCard>
 
     <div class="actions">
-      <UButton :to="`/clubs/${clubId}`" variant="ghost"
+      <UButton :to="`${locale}/clubs/${clubId}`" variant="ghost"
         >동호회 상세 보기</UButton
       >
-      <UButton to="/clubs" variant="ghost">동호회 목록 보기</UButton>
+      <UButton :to="`${locale}/clubs`" variant="ghost"
+        >동호회 목록 보기</UButton
+      >
     </div>
   </div>
 </template>
@@ -1662,7 +1702,7 @@ const openAdminChat = async () => {
                   </UButton>
                   <UButton
                     variant="ghost"
-                    :to="`/admin/update-requests/${request.id}`"
+                    :to="`${locale}/admin/update-requests/${request.id}`"
                   >
                     상세보기
                   </UButton>
@@ -1677,6 +1717,8 @@ const openAdminChat = async () => {
 </template>
 
 <script setup lang="ts">
+const { locale } = useI18n()
+
 const tabs = [
   { key: 'pending', label: '승인 대기', count: 0 },
   { key: 'approved', label: '승인됨', count: 0 },
@@ -1766,7 +1808,9 @@ onMounted(() => {
 
         <div class="actions">
           <UButton type="submit" :loading="loading"> 수정 저장 </UButton>
-          <UButton to="/admin/clubs" variant="ghost"> 목록으로 </UButton>
+          <UButton :to="`${locale}/admin/clubs`" variant="ghost">
+            목록으로
+          </UButton>
         </div>
       </UForm>
     </UCard>
@@ -1774,6 +1818,8 @@ onMounted(() => {
 </template>
 
 <script setup lang="ts">
+const { locale } = useI18n()
+
 const route = useRoute()
 const clubId = route.params.id
 

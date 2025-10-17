@@ -5,12 +5,12 @@
 
     <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
       <UCheckbox
-        v-for="danceType in danceTypeOptions"
+        v-for="danceType in DANCE_TYPE_OPTIONS"
         :key="danceType.value"
-        v-model="selectedTypes"
-        :value="danceType.value"
+        :model-value="selectedTypes.includes(danceType.value)"
         :label="danceType.label"
         class="flex items-center"
+        @update:model-value="(checked: boolean) => toggleDanceType(danceType.value, checked)"
       />
     </div>
 
@@ -27,6 +27,7 @@
 
 <script setup lang="ts">
 import type { DanceType } from '~/types'
+import { DANCE_TYPE_OPTIONS } from '../types/common.types'
 
 const props = defineProps<{
   modelValue: DanceType[]
@@ -36,26 +37,25 @@ const emit = defineEmits<{
   'update:modelValue': [value: DanceType[]]
 }>()
 
-const selectedTypes = computed({
-  get: () => props.modelValue || [],
-  set: value => emit('update:modelValue', value),
-})
+const selectedTypes = computed(() => props.modelValue || [])
 
-const danceTypeOptions = [
-  { label: '살사 (Salsa)', value: 'salsa' },
-  { label: '바차타 (Bachata)', value: 'bachata' },
-  { label: '주크 (Zouk)', value: 'zouk' },
-  { label: '차차차 (Cha Cha Cha)', value: 'chachacha' },
-  { label: '룸바 (Rumba)', value: 'rumba' },
-  { label: '삼바 (Samba)', value: 'samba' },
-  { label: '파소도블 (Paso Doble)', value: 'pasodoble' },
-  { label: '자이브 (Jive)', value: 'jive' },
-  { label: '메렝게 (Merengue)', value: 'merengue' },
-  { label: '기타', value: 'other' },
-]
+const toggleDanceType = (danceType: DanceType, checked: boolean) => {
+  const currentTypes = [...selectedTypes.value]
+  if (checked) {
+    if (!currentTypes.includes(danceType)) {
+      currentTypes.push(danceType)
+    }
+  } else {
+    const index = currentTypes.indexOf(danceType)
+    if (index > -1) {
+      currentTypes.splice(index, 1)
+    }
+  }
+  emit('update:modelValue', currentTypes)
+}
 
 const getDanceTypeLabel = (value: DanceType) => {
-  const option = danceTypeOptions.find(opt => opt.value === value)
+  const option = DANCE_TYPE_OPTIONS.find(opt => opt.value === value)
   return option ? option.label : value
 }
 </script>

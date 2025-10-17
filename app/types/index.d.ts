@@ -2,6 +2,7 @@ import type { AvatarProps } from '@nuxt/ui'
 
 // 라틴댄스 타입
 export type DanceType =
+  | 'all'
   | 'salsa'
   | 'bachata'
   | 'zouk'
@@ -21,6 +22,7 @@ export type EntityType = 'club' | 'latin_bar'
 
 // 소셜 플랫폼
 export type SocialPlatform =
+  | 'all'
   | 'instagram'
   | 'kakaotalk'
   | 'daumcafe'

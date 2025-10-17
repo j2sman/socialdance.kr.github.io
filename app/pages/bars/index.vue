@@ -7,7 +7,9 @@
             <h1 class="text-3xl font-bold">라틴바 목록</h1>
             <p class="text-neutral-600 mt-2">전국의 라틴바를 찾아보세요</p>
           </div>
-          <UButton to="/bars/create" color="primary" icon="i-heroicons-plus"> 라틴바 등록 </UButton>
+          <UButton :to="`/${locale}/bars/create`" color="primary" icon="i-heroicons-plus">
+            라틴바 등록
+          </UButton>
         </div>
 
         <!-- 필터 및 검색 -->
@@ -44,7 +46,7 @@
           />
           <h3 class="text-xl font-semibold mb-2">등록된 라틴바가 없습니다</h3>
           <p class="text-neutral-600 mb-6">첫 번째 라틴바를 등록해보세요!</p>
-          <UButton to="/bars/create" color="primary" icon="i-heroicons-plus">
+          <UButton :to="`/${locale}/bars/create`" color="primary" icon="i-heroicons-plus">
             라틴바 등록하기
           </UButton>
         </div>
@@ -116,8 +118,8 @@
 <script setup lang="ts">
 import type { LatinBar, MapProvider, SocialPlatform } from '~/types'
 
+const { locale } = useI18n()
 const { getLatinBars } = useLatinBars()
-
 const bars = ref<LatinBar[]>([])
 const pending = ref(true)
 const searchQuery = ref('')

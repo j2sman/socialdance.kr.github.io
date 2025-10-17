@@ -1,5 +1,6 @@
 <script setup lang="ts">
 const { getAdminChatUrl } = useSiteSettings()
+const { locale } = useI18n()
 
 const openAdminChat = async () => {
   try {
@@ -18,20 +19,29 @@ const openAdminChat = async () => {
       <UContainer>
         <div class="flex justify-between items-center h-16">
           <!-- Logo -->
-          <NuxtLink to="/" class="flex items-center space-x-2">
-            <UIcon name="i-heroicons-heart" class="w-8 h-8 text-red-500" />
+          <NuxtLink :to="`/${locale}`" class="flex items-center space-x-2">
+            <UIcon name="i-heroicons-heart" class="w-8 h-8 text-error-500" />
             <span class="text-xl font-bold text-neutral-900">{{ $t('common.latinDance') }}</span>
           </NuxtLink>
 
           <!-- Navigation -->
           <nav class="hidden md:flex space-x-8">
-            <NuxtLink to="/" class="text-neutral-700 hover:text-red-600 transition-colors">
+            <NuxtLink
+              :to="`/${locale}`"
+              class="text-neutral-700 hover:text-error-600 transition-colors"
+            >
               {{ $t('navigation.home') }}
             </NuxtLink>
-            <NuxtLink to="/clubs" class="text-neutral-700 hover:text-red-600 transition-colors">
+            <NuxtLink
+              :to="`/${locale}/clubs`"
+              class="text-neutral-700 hover:text-error-600 transition-colors"
+            >
               {{ $t('navigation.clubs') }}
             </NuxtLink>
-            <NuxtLink to="/bars" class="text-neutral-700 hover:text-red-600 transition-colors">
+            <NuxtLink
+              :to="`/${locale}/bars`"
+              class="text-neutral-700 hover:text-error-600 transition-colors"
+            >
               {{ $t('navigation.bars') }}
             </NuxtLink>
           </nav>
@@ -80,18 +90,18 @@ const openAdminChat = async () => {
             </h3>
             <ul class="space-y-2">
               <li>
-                <NuxtLink to="/clubs" class="text-neutral-400 hover:text-white transition-colors">
+                <NuxtLink :to="`/${locale}/clubs`" class="text-neutral-400 hover:text-white transition-colors">
                   {{ $t('footer.links.findClubs') }}
                 </NuxtLink>
               </li>
               <li>
-                <NuxtLink to="/bars" class="text-neutral-400 hover:text-white transition-colors">
+                <NuxtLink :to="`/${locale}/bars`" class="text-neutral-400 hover:text-white transition-colors">
                   {{ $t('footer.links.findBars') }}
                 </NuxtLink>
               </li>
               <li>
                 <NuxtLink
-                  to="/clubs/create"
+                  :to="`/${locale}/clubs/create`"
                   class="text-neutral-400 hover:text-white transition-colors"
                 >
                   {{ $t('footer.links.registerClub') }}
@@ -99,7 +109,7 @@ const openAdminChat = async () => {
               </li>
               <li>
                 <NuxtLink
-                  to="/bars/create"
+                  :to="`/${locale}/bars/create`"
                   class="text-neutral-400 hover:text-white transition-colors"
                 >
                   {{ $t('footer.links.registerBar') }}

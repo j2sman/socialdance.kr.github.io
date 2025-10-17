@@ -66,7 +66,7 @@
                 <UButton type="submit" :loading="loading" size="lg" color="primary" class="flex-1">
                   동호회 등록
                 </UButton>
-                <UButton to="/clubs" variant="ghost" size="lg"> 취소 </UButton>
+                <UButton :to="`/${locale}/clubs`" variant="ghost" size="lg"> 취소 </UButton>
               </div>
             </UForm>
           </UCard>
@@ -80,7 +80,7 @@
 import type { ClubFormData } from '~/types'
 
 const { createClub } = useClubs()
-
+const { locale } = useI18n()
 const form = reactive<ClubFormData>({
   name: '',
   name_en: '',
@@ -105,7 +105,7 @@ const onSubmit = async () => {
     await createClub(form)
     await navigateTo('/clubs/create/success')
   } catch (error) {
-  console.error('동호회 등록 실패:', error)
+    console.error('동호회 등록 실패:', error)
     // 에러 토스트 표시
   } finally {
     loading.value = false

@@ -1,6 +1,8 @@
+const { locale } = useI18n()
+
 export default defineNuxtRouteMiddleware(async to => {
   // 관리자 페이지가 아닌 경우 통과
-  if (!to.path.startsWith('/admin')) {
+  if (!to.path.includes('/admin')) {
     return
   }
 
@@ -8,18 +10,18 @@ export default defineNuxtRouteMiddleware(async to => {
   const { isAdmin, checkAuth } = useAdminAuth()
 
   // 클라이언트 사이드에서 인증 상태 확인
-  if (process.client) {
+  if (import.meta.client) {
     const isAuthenticated = await checkAuth()
     if (!isAuthenticated) {
-      return navigateTo('/admin/login')
+      return navigateTo(`/${locale.value}/admin/login`)
     }
   }
 
   // 서버 사이드에서 인증 상태 확인
-  if (process.server) {
+  if (import.meta.server) {
     const isAuthenticated = await checkAuth()
     if (!isAuthenticated) {
-      return navigateTo('/admin/login')
+      return navigateTo(`/${locale.value}/admin/login`)
     }
   }
 })

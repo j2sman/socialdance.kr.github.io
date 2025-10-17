@@ -1,4 +1,5 @@
 export const useAdminAuth = () => {
+  // hydration 문제 방지를 위해 초기값을 명시적으로 설정
   const isAdmin = useState('isAdmin', () => false)
   const adminEmail = useState('adminEmail', () => '')
 

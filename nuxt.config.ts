@@ -33,16 +33,19 @@ export default defineNuxtConfig({
   i18n: {
     defaultLocale: 'ko',
     detectBrowserLanguage: {
+      alwaysRedirect: false, // hydration 문제 방지를 위해 false로 변경
       cookieKey: 'i18n_redirected',
+      fallbackLocale: 'ko', // 감지 실패시 기본 언어
       redirectOn: 'root',
       useCookie: true,
     },
-    langDir: 'locales',
+    langDir: './locales',
     locales: [
       { code: 'ko', file: 'ko.json', name: '한국어' },
       { code: 'en', file: 'en.json', name: 'English' },
     ],
-    strategy: 'prefix_except_default',
+    skipSettingLocaleOnNavigate: false,
+    strategy: 'prefix',
   },
 
   modules: [
@@ -66,22 +69,22 @@ export default defineNuxtConfig({
     // 모든 일반 사용자 페이지는 public으로 설정
     '/': { prerender: true },
     // 관리자 페이지는 인증 필요 (향후 구현 시)
-    '/admin/**': {
+    '/${locale}/admin/**': {
       ssr: false,
       // 인증 미들웨어는 별도로 구현 예정
     },
+    '/${locale}/bars': { prerender: true },
+    '/${locale}/bars/**': { prerender: true },
+    '/${locale}/clubs': { prerender: true },
+    '/${locale}/clubs/**': { prerender: true },
+    '/${locale}/customers': { prerender: true },
+    '/${locale}/inbox': { prerender: true },
+    '/${locale}/settings': { prerender: true },
+    '/${locale}/settings/**': { prerender: true },
     // API 엔드포인트는 CORS 허용
     '/api/**': {
       cors: true,
     },
-    '/bars': { prerender: true },
-    '/bars/**': { prerender: true },
-    '/clubs': { prerender: true },
-    '/clubs/**': { prerender: true },
-    '/customers': { prerender: true },
-    '/inbox': { prerender: true },
-    '/settings': { prerender: true },
-    '/settings/**': { prerender: true },
   },
 
   // 런타임 설정
@@ -112,6 +115,8 @@ export default defineNuxtConfig({
       // 관리자 페이지만 인증 요구, 나머지는 모두 public
       exclude: [
         '/',
+        '/ko',
+        '/en',
         '/bars',
         '/bars/**',
         '/clubs',
@@ -121,7 +126,7 @@ export default defineNuxtConfig({
         '/settings',
         '/settings/**',
       ],
-      login: '/admin/login',
+      login: '/${locale}/admin/login',
     },
     secretKey: process.env.SESSION_SECRET,
     url: process.env.SUPABASE_URL,

@@ -2,10 +2,7 @@
   <div class="success-page">
     <UContainer>
       <div class="py-16 text-center">
-        <UIcon
-          name="i-heroicons-check-circle"
-          class="success-icon w-16 h-16 text-primary-500 mx-auto mb-6"
-        />
+        <UIcon name="i-heroicons-check-circle" class="w-16 h-16 text-primary-500 mx-auto mb-6" />
         <h1 class="text-3xl font-bold mb-4">라틴바 등록이 완료되었습니다!</h1>
         <p class="text-neutral-600 mb-8">관리자 승인 후 사이트에 표시됩니다.</p>
 
@@ -29,8 +26,8 @@
         </UCard>
 
         <div class="flex flex-col sm:flex-row gap-4 justify-center">
-          <UButton to="/bars" variant="ghost" size="lg"> 라틴바 목록 보기 </UButton>
-          <UButton to="/" variant="ghost" size="lg"> 홈으로 </UButton>
+          <UButton :to="`/${locale}/bars`" variant="ghost" size="lg"> 라틴바 목록 보기 </UButton>
+          <UButton :to="`/${locale}/`" variant="ghost" size="lg"> 홈으로 </UButton>
         </div>
       </div>
     </UContainer>
@@ -39,6 +36,7 @@
 
 <script setup lang="ts">
 const { getAdminChatUrl } = useSiteSettings()
+const { locale } = useI18n()
 
 const openAdminChat = async () => {
   try {
@@ -51,8 +49,4 @@ const openAdminChat = async () => {
 }
 </script>
 
-<style scoped>
-.success-icon {
-  @apply text-primary-500;
-}
-</style>
+<style scoped></style>

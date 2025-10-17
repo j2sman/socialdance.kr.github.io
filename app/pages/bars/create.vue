@@ -29,7 +29,7 @@
               <UFormGroup label="지도 제공자 (선택사항)" name="mapProvider">
                 <USelect
                   v-model="form.map_provider"
-                  :options="mapProviderOptions"
+                  :items="MAP_PROVIDER_OPTIONS"
                   placeholder="지도 제공자를 선택하세요"
                 />
               </UFormGroup>
@@ -44,7 +44,7 @@
                 <UButton type="submit" :loading="loading" size="lg" color="primary" class="flex-1">
                   라틴바 등록
                 </UButton>
-                <UButton to="/bars" variant="ghost" size="lg"> 취소 </UButton>
+                <UButton :to="`/${locale}/bars`" variant="ghost" size="lg"> 취소 </UButton>
               </div>
             </UForm>
           </UCard>
@@ -56,7 +56,9 @@
 
 <script setup lang="ts">
 import type { LatinBarFormData } from '~/types'
+import { MAP_PROVIDER_OPTIONS } from '../../types/common.types'
 
+const { locale } = useI18n()
 const { createLatinBar } = useLatinBars()
 
 const form = reactive<LatinBarFormData>({
@@ -70,12 +72,6 @@ const form = reactive<LatinBarFormData>({
 })
 
 const loading = ref(false)
-
-const mapProviderOptions = [
-  { label: '카카오맵', value: 'kakao' },
-  { label: '네이버지도', value: 'naver' },
-  { label: '구글맵', value: 'google' },
-]
 
 const onSubmit = async () => {
   if (!form.name.trim() || !form.address.trim()) {
