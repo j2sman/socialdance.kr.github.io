@@ -15,33 +15,22 @@
         placeholder="비밀번호"
         class="flex-1"
       />
-      <UButton
-        icon="i-heroicons-trash"
-        color="red"
-        variant="ghost"
-        @click="removeLink(index)"
-      />
+      <UButton icon="i-heroicons-trash" color="error" variant="ghost" @click="removeLink(index)" />
     </div>
-    <UButton
-      icon="i-heroicons-plus"
-      label="링크 추가"
-      variant="outline"
-      @click="addLink"
-    />
+    <UButton icon="i-heroicons-plus" label="링크 추가" variant="outline" @click="addLink" />
   </div>
 </template>
 
 <script setup lang="ts">
+import type { SocialLink } from '~/types'
+
 const props = defineProps<{
-  modelValue: Omit<
-    SocialLink,
-    'id' | 'entity_type' | 'entity_id' | 'created_at'
-  >[]
+  modelValue: Omit<SocialLink, 'id' | 'entity_type' | 'entity_id' | 'created_at'>[]
 }>()
 
 const emit = defineEmits<{
   'update:modelValue': [
-    value: Omit<SocialLink, 'id' | 'entity_type' | 'entity_id' | 'created_at'>[]
+    value: Omit<SocialLink, 'id' | 'entity_type' | 'entity_id' | 'created_at'>[],
   ]
 }>()
 
@@ -52,27 +41,23 @@ const platformOptions = [
   { label: '네이버카페', value: 'navercafe' },
   { label: '유튜브', value: 'youtube' },
   { label: 'Notion', value: 'notion' },
-  { label: '기타', value: 'other' }
+  { label: '기타', value: 'other' },
 ]
 
-const links = ref<
-  Omit<SocialLink, 'id' | 'entity_type' | 'entity_id' | 'created_at'>[]
->(
-  props.modelValue?.length
-    ? props.modelValue
-    : [{ platform: '', url: '', password: '' }]
+const links = ref<Omit<SocialLink, 'id' | 'entity_type' | 'entity_id' | 'created_at'>[]>(
+  props.modelValue?.length ? props.modelValue : [{ platform: 'instagram', url: '', password: '' }]
 )
 
 watch(
   links,
-  (newLinks) => {
+  newLinks => {
     emit('update:modelValue', newLinks)
   },
   { deep: true }
 )
 
 const addLink = () => {
-  links.value.push({ platform: '', url: '', password: '' })
+  links.value.push({ platform: 'instagram', url: '', password: '' })
 }
 
 const removeLink = (index: number) => {

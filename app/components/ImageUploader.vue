@@ -1,9 +1,7 @@
 <template>
   <div class="image-uploader">
     <h3>사진 (선택사항)</h3>
-    <p class="text-sm text-gray-600 mb-4">
-      동호회/라틴바를 소개할 사진을 업로드해주세요.
-    </p>
+    <p class="text-sm text-neutral-600 mb-4">동호회/라틴바를 소개할 사진을 업로드해주세요.</p>
 
     <div
       class="upload-area"
@@ -14,12 +12,7 @@
     >
       <UIcon name="i-heroicons-photo" class="upload-icon" />
       <p>파일을 드래그하거나 클릭하여 업로드</p>
-      <UButton
-        icon="i-heroicons-plus"
-        label="파일 선택"
-        variant="outline"
-        @click="selectFiles"
-      />
+      <UButton icon="i-heroicons-plus" label="파일 선택" variant="outline" @click="selectFiles" />
       <input
         ref="fileInput"
         type="file"
@@ -27,15 +20,15 @@
         accept="image/*"
         class="hidden"
         @change="handleFileSelect"
-      >
+      />
     </div>
 
     <div v-if="images.length > 0" class="image-preview">
       <div v-for="(image, index) in images" :key="index" class="image-item">
-        <img :src="image.preview" :alt="`이미지 ${index + 1}`">
+        <img :src="image.preview" :alt="`이미지 ${index + 1}`" />
         <UButton
           icon="i-heroicons-trash"
-          color="red"
+          color="error"
           variant="ghost"
           size="sm"
           @click="removeImage(index)"
@@ -87,9 +80,9 @@ const addFiles = (files: File[]) => {
   const newImages = [...images.value, ...imageFiles]
 
   // 미리보기 URL 생성
-  newImages.forEach((file) => {
+  newImages.forEach(file => {
     if (!(file as ImageFile).preview) {
-      (file as ImageFile).preview = URL.createObjectURL(file)
+      ;(file as ImageFile).preview = URL.createObjectURL(file)
     }
   })
 
@@ -109,7 +102,7 @@ const removeImage = (index: number) => {
 
 // 컴포넌트 언마운트 시 URL 정리
 onUnmounted(() => {
-  images.value.forEach((file) => {
+  images.value.forEach(file => {
     if (file.preview) {
       URL.revokeObjectURL(file.preview)
     }
@@ -119,16 +112,16 @@ onUnmounted(() => {
 
 <style scoped>
 .upload-area {
-  @apply border-2 border-dashed border-gray-300 rounded-lg p-8 text-center cursor-pointer transition-colors;
+  @apply border-2 border-dashed border-neutral-300 rounded-lg p-8 text-center cursor-pointer transition-colors;
 }
 
 .upload-area:hover,
 .upload-area.drag-over {
-  @apply border-blue-500 bg-blue-50;
+  @apply border-success-500 bg-success-50;
 }
 
 .upload-icon {
-  @apply w-12 h-12 text-gray-400 mx-auto mb-4;
+  @apply w-12 h-12 text-neutral-400 mx-auto mb-4;
 }
 
 .image-preview {

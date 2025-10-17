@@ -1,36 +1,43 @@
 <template>
   <div class="relative">
     <UButton
-      :label="currentLanguage.name"
+      :label="currentLanguage?.name"
       variant="ghost"
       color="neutral"
       :icon="isOpen ? 'i-heroicons-chevron-up' : 'i-heroicons-chevron-down'"
       @click="isOpen = !isOpen"
     />
 
-    <UTransition>
+    <Transition
+      enter-active-class="transition ease-out duration-200"
+      enter-from-class="opacity-0 scale-95"
+      enter-to-class="opacity-100 scale-100"
+      leave-active-class="transition ease-in duration-150"
+      leave-from-class="opacity-100 scale-100"
+      leave-to-class="opacity-0 scale-95"
+    >
       <div
         v-if="isOpen"
-        class="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-md shadow-lg z-50 border border-gray-200 dark:border-gray-700"
+        class="absolute right-0 mt-2 w-48 bg-white dark:bg-neutral-800 rounded-md shadow-lg z-50 border border-neutral-200 dark:border-neutral-700"
       >
         <div class="py-1">
           <button
             v-for="locale in locales"
             :key="locale.code"
-            class="w-full text-left px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center justify-between"
-            :class="{ 'bg-gray-100 dark:bg-gray-700': locale.code === currentLocale }"
+            class="w-full text-left px-4 py-2 text-sm hover:bg-neutral-100 dark:hover:bg-neutral-700 flex items-center justify-between"
+            :class="{ 'bg-neutral-100 dark:bg-neutral-700': locale.code === currentLocale }"
             @click="changeLanguage(locale.code)"
           >
             <span>{{ locale.name }}</span>
             <UIcon
               v-if="locale.code === currentLocale"
               name="i-heroicons-check"
-              class="w-4 h-4 text-blue-600"
+              class="w-4 h-4 text-success-600"
             />
           </button>
         </div>
       </div>
-    </UTransition>
+    </Transition>
   </div>
 </template>
 
@@ -45,7 +52,7 @@ const currentLanguage = computed(
 )
 
 const changeLanguage = async (newLocale: string) => {
-  await setLocale(newLocale)
+  await (setLocale(newLocale as 'ko' | 'en') as Promise<void>)
   isOpen.value = false
 }
 

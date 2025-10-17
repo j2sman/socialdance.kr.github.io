@@ -5,7 +5,7 @@
         <div class="flex justify-between items-center mb-8">
           <div>
             <h1 class="text-3xl font-bold">동호회 목록</h1>
-            <p class="text-gray-600 mt-2">전국의 라틴댄스 동호회를 찾아보세요</p>
+            <p class="text-neutral-600 mt-2">전국의 라틴댄스 동호회를 찾아보세요</p>
           </div>
           <UButton to="/clubs/create" color="primary" icon="i-heroicons-plus">
             동호회 등록
@@ -40,9 +40,9 @@
 
         <!-- 빈 상태 -->
         <div v-else-if="filteredClubs.length === 0" class="text-center py-12">
-          <UIcon name="i-heroicons-users" class="w-16 h-16 text-gray-400 mx-auto mb-4" />
+          <UIcon name="i-heroicons-users" class="w-16 h-16 text-neutral-400 mx-auto mb-4" />
           <h3 class="text-xl font-semibold mb-2">등록된 동호회가 없습니다</h3>
-          <p class="text-gray-600 mb-6">첫 번째 동호회를 등록해보세요!</p>
+          <p class="text-neutral-600 mb-6">첫 번째 동호회를 등록해보세요!</p>
           <UButton to="/clubs/create" color="primary" icon="i-heroicons-plus">
             동호회 등록하기
           </UButton>
@@ -63,7 +63,7 @@
                 </h3>
                 <UBadge
                   v-if="club.dance_types && club.dance_types.length > 0"
-                  color="blue"
+                  color="success"
                   variant="soft"
                 >
                   {{ club.dance_types.length }}개 댄스
@@ -77,7 +77,7 @@
                 <UBadge
                   v-for="danceType in club.dance_types.slice(0, 3)"
                   :key="danceType"
-                  color="blue"
+                  color="success"
                   variant="soft"
                   size="sm"
                 >
@@ -114,7 +114,7 @@
 
             <!-- 등록일 -->
             <template #footer>
-              <div class="flex justify-between items-center text-sm text-gray-500">
+              <div class="flex justify-between items-center text-sm text-neutral-500">
                 <span>{{ formatDate(club.created_at) }} 등록</span>
                 <UIcon name="i-heroicons-arrow-right" class="w-4 h-4" />
               </div>
@@ -127,6 +127,8 @@
 </template>
 
 <script setup lang="ts">
+import type { Club, DanceType, SocialPlatform } from '~/types'
+
 const { getClubs } = useClubs()
 
 const clubs = ref<Club[]>([])
@@ -162,7 +164,7 @@ const filteredClubs = computed(() => {
   // 댄스 타입 필터
   if (selectedDanceType.value) {
     filtered = filtered.filter(club =>
-      club.dance_types?.includes(selectedDanceType.value as DanceType)
+      club.dance_types?.includes(selectedDanceType.value as unknown as DanceType)
     )
   }
 

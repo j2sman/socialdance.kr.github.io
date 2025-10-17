@@ -321,7 +321,7 @@ const openAdminChat = async () => {
       <UButton
         icon="i-simple-icons-kakaotalk"
         label="관리자 오픈카톡"
-        color="yellow"
+        color="warning"
         @click="openAdminChat"
       />
     </div>
@@ -1122,7 +1122,7 @@ $$ LANGUAGE plpgsql SECURITY DEFINER;
 <template>
   <div class="dance-type-selector">
     <h3>라틴댄스 타입 (선택사항)</h3>
-    <p class="text-sm text-gray-600 mb-4">
+    <p class="text-sm text-neutral-600 mb-4">
       해당하는 댄스 타입을 모두 선택해주세요.
     </p>
 
@@ -1138,12 +1138,12 @@ $$ LANGUAGE plpgsql SECURITY DEFINER;
     </div>
 
     <div v-if="selectedTypes.length > 0" class="mt-4">
-      <p class="text-sm text-gray-600">선택된 댄스 타입:</p>
+      <p class="text-sm text-neutral-600">선택된 댄스 타입:</p>
       <div class="flex flex-wrap gap-2 mt-2">
         <UBadge
           v-for="type in selectedTypes"
           :key="type"
-          color="blue"
+          color="success"
           variant="soft"
         >
           {{ getDanceTypeLabel(type) }}
@@ -1194,7 +1194,7 @@ const getDanceTypeLabel = (value: string) => {
 <template>
   <div class="image-uploader">
     <h3>사진 (선택사항)</h3>
-    <p class="text-sm text-gray-600 mb-4">
+    <p class="text-sm text-neutral-600 mb-4">
       동호회/라틴바를 소개할 사진을 업로드해주세요.
     </p>
 
@@ -1228,7 +1228,7 @@ const getDanceTypeLabel = (value: string) => {
         <img :src="image.preview" :alt="`이미지 ${index + 1}`" />
         <UButton
           icon="i-heroicons-trash"
-          color="red"
+          color="error"
           variant="ghost"
           size="sm"
           @click="removeImage(index)"
@@ -1308,16 +1308,16 @@ onUnmounted(() => {
 
 <style scoped>
 .upload-area {
-  @apply border-2 border-dashed border-gray-300 rounded-lg p-8 text-center cursor-pointer transition-colors;
+  @apply border-2 border-dashed border-neutral-300 rounded-lg p-8 text-center cursor-pointer transition-colors;
 }
 
 .upload-area:hover,
 .upload-area.drag-over {
-  @apply border-blue-500 bg-blue-50;
+  @apply border-success-500 bg-success-50;
 }
 
 .upload-icon {
-  @apply w-12 h-12 text-gray-400 mx-auto mb-4;
+  @apply w-12 h-12 text-neutral-400 mx-auto mb-4;
 }
 
 .image-preview {
@@ -1361,7 +1361,7 @@ onUnmounted(() => {
       />
       <UButton
         icon="i-heroicons-trash"
-        color="red"
+        color="error"
         variant="ghost"
         @click="removeLink(index)"
       />
@@ -1405,7 +1405,7 @@ const removeLink = (index: number) => {
 <template>
   <div class="create-club-page">
     <h1>동호회 등록</h1>
-    <p class="text-gray-600">
+    <p class="text-neutral-600">
       새로운 동호회를 등록해주세요. 관리자 승인 후 사이트에 표시됩니다.
     </p>
 
@@ -1485,7 +1485,7 @@ const onSubmit = async () => {
 <template>
   <div class="request-update-page">
     <h1>동호회 정보 수정 요청</h1>
-    <p class="text-gray-600">수정 요청은 관리자 승인 후 반영됩니다.</p>
+    <p class="text-neutral-600">수정 요청은 관리자 승인 후 반영됩니다.</p>
 
     <UCard>
       <template #header>
@@ -1623,7 +1623,7 @@ const openAdminChat = async () => {
               <template #header>
                 <div class="flex justify-between items-center">
                   <h3>{{ getEntityName(request) }}</h3>
-                  <UBadge color="yellow">{{ request.entity_type }}</UBadge>
+                  <UBadge color="warning">{{ request.entity_type }}</UBadge>
                 </div>
               </template>
 
@@ -1636,7 +1636,7 @@ const openAdminChat = async () => {
                   <strong>요청일:</strong> {{ formatDate(request.created_at) }}
                 </p>
                 <p><strong>수정 내용:</strong></p>
-                <div class="bg-gray-50 p-3 rounded">
+                <div class="bg-neutral-50 p-3 rounded">
                   <pre class="text-sm">{{
                     JSON.stringify(request.request_data, null, 2)
                   }}</pre>
@@ -1653,7 +1653,7 @@ const openAdminChat = async () => {
                     승인
                   </UButton>
                   <UButton
-                    color="red"
+                    color="error"
                     variant="outline"
                     @click="rejectRequest(request.id)"
                     :loading="loading === request.id"

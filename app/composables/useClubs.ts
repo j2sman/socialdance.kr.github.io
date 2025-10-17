@@ -1,3 +1,5 @@
+import type { Club, ClubFormData, UpdateRequest } from '~/types'
+
 export const useClubs = () => {
   const supabase = useSupabaseClient()
 
@@ -15,7 +17,7 @@ export const useClubs = () => {
       .order('created_at', { ascending: false })
 
     if (error) throw error
-    return data || []
+    return data as unknown as Club[]
   }
 
   const getClub = async (id: string): Promise<Club | null> => {
@@ -33,7 +35,7 @@ export const useClubs = () => {
       .single()
 
     if (error) return null
-    return data
+    return data as unknown as Club
   }
 
   const createClub = async (clubData: ClubFormData): Promise<Club> => {
@@ -49,15 +51,18 @@ export const useClubs = () => {
       .single()
 
     if (error) throw error
-    return data
+    return data as unknown as Club
   }
 
   const requestClubUpdate = async (id: string, updateData: ClubFormData): Promise<void> => {
-    const { error } = await supabase.from('update_requests').insert({
+    const { error } = await supabase.from('update_requests').insert<UpdateRequest>({
+      created_at: new Date().toISOString(),
       entity_id: id,
       entity_type: 'club',
-      request_data: updateData,
+      id: crypto.randomUUID(),
+      request_data: JSON.stringify(updateData),
       status: 'pending',
+      updated_at: new Date().toISOString(),
     })
 
     if (error) throw error

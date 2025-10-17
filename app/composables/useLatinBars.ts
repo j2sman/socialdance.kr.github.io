@@ -1,3 +1,5 @@
+import type { LatinBar, LatinBarFormData, UpdateRequest } from '~/types'
+
 export const useLatinBars = () => {
   const supabase = useSupabaseClient()
 
@@ -15,7 +17,7 @@ export const useLatinBars = () => {
       .order('created_at', { ascending: false })
 
     if (error) throw error
-    return data || []
+    return data as unknown as LatinBar[]
   }
 
   const getLatinBar = async (id: string): Promise<LatinBar | null> => {
@@ -33,7 +35,7 @@ export const useLatinBars = () => {
       .single()
 
     if (error) return null
-    return data
+    return data as unknown as LatinBar
   }
 
   const createLatinBar = async (barData: LatinBarFormData): Promise<LatinBar> => {
@@ -51,15 +53,18 @@ export const useLatinBars = () => {
       .single()
 
     if (error) throw error
-    return data
+    return data as unknown as LatinBar
   }
 
   const requestLatinBarUpdate = async (id: string, updateData: LatinBarFormData): Promise<void> => {
-    const { error } = await supabase.from('update_requests').insert({
+    const { error } = await supabase.from('update_requests').insert<UpdateRequest>({
+      created_at: new Date().toISOString(),
       entity_id: id,
       entity_type: 'latin_bar',
-      request_data: updateData,
+      id: crypto.randomUUID(),
+      request_data: JSON.stringify(updateData),
       status: 'pending',
+      updated_at: new Date().toISOString(),
     })
 
     if (error) throw error

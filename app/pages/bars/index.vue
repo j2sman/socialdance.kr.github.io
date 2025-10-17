@@ -5,7 +5,7 @@
         <div class="flex justify-between items-center mb-8">
           <div>
             <h1 class="text-3xl font-bold">라틴바 목록</h1>
-            <p class="text-gray-600 mt-2">전국의 라틴바를 찾아보세요</p>
+            <p class="text-neutral-600 mt-2">전국의 라틴바를 찾아보세요</p>
           </div>
           <UButton to="/bars/create" color="primary" icon="i-heroicons-plus"> 라틴바 등록 </UButton>
         </div>
@@ -38,9 +38,12 @@
 
         <!-- 빈 상태 -->
         <div v-else-if="filteredBars.length === 0" class="text-center py-12">
-          <UIcon name="i-heroicons-building-office" class="w-16 h-16 text-gray-400 mx-auto mb-4" />
+          <UIcon
+            name="i-heroicons-building-office"
+            class="w-16 h-16 text-neutral-400 mx-auto mb-4"
+          />
           <h3 class="text-xl font-semibold mb-2">등록된 라틴바가 없습니다</h3>
-          <p class="text-gray-600 mb-6">첫 번째 라틴바를 등록해보세요!</p>
+          <p class="text-neutral-600 mb-6">첫 번째 라틴바를 등록해보세요!</p>
           <UButton to="/bars/create" color="primary" icon="i-heroicons-plus">
             라틴바 등록하기
           </UButton>
@@ -70,9 +73,9 @@
               <div class="flex items-start gap-2">
                 <UIcon
                   name="i-heroicons-map-pin"
-                  class="w-4 h-4 text-gray-500 mt-0.5 flex-shrink-0"
+                  class="w-4 h-4 text-neutral-500 mt-0.5 flex-shrink-0"
                 />
-                <p class="text-gray-600 text-sm">
+                <p class="text-neutral-600 text-sm">
                   {{ bar.address }}
                 </p>
               </div>
@@ -98,7 +101,7 @@
 
             <!-- 등록일 -->
             <template #footer>
-              <div class="flex justify-between items-center text-sm text-gray-500">
+              <div class="flex justify-between items-center text-sm text-neutral-500">
                 <span>{{ formatDate(bar.created_at) }} 등록</span>
                 <UIcon name="i-heroicons-arrow-right" class="w-4 h-4" />
               </div>
@@ -111,6 +114,8 @@
 </template>
 
 <script setup lang="ts">
+import type { LatinBar, MapProvider, SocialPlatform } from '~/types'
+
 const { getLatinBars } = useLatinBars()
 
 const bars = ref<LatinBar[]>([])

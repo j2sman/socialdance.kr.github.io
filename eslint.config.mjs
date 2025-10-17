@@ -94,6 +94,7 @@ export default [
       '.output/**', // 모든 .output 폴더 제외
       'tailwind.config.ts', // Tailwind 설정 파일 제외
       'deploy/**/*', // 배포 관련 파일들 제외
+      'middleware/**/*.ts', // 미들웨어 파일 제외
       'server/middleware/authMiddleware.ts', // 인증 미들웨어 파일 제외
     ],
     plugins: {
@@ -129,6 +130,54 @@ export default [
       '@typescript-eslint/no-floating-promises': 'off', // 경고를 끔
 
       // sort-properties 규칙들 추가
+      'sort-properties/sort-interface': 'warn',
+      'sort-properties/sort-object-expression': [
+        'warn',
+        {
+          allowLineSeparatedGroups: false,
+          caseSensitive: true,
+          functionOrder: 'higher',
+          includeComments: 'leading',
+          minKeys: 2,
+          natural: true,
+          order: 'asc',
+        },
+      ],
+      'sort-properties/sort-type-literal': 'warn',
+    },
+  },
+
+  // Middleware 파일 설정 (프로젝트 설정 없이)
+  {
+    files: ['middleware/**/*.ts'],
+    plugins: {
+      '@typescript-eslint': tsESLint,
+      prettier: prettierPlugin,
+      import: importPlugin,
+      node: nodePlugin,
+      'sort-properties': sortPropertiesPlugin,
+    },
+    languageOptions: {
+      parser: tsESLintParser,
+      parserOptions: {
+        ecmaVersion: 2022,
+        sourceType: 'module',
+      },
+    },
+    rules: {
+      '@typescript-eslint/explicit-function-return-type': 'off',
+      '@typescript-eslint/no-unused-vars': 'off',
+      'prettier/prettier': 'error',
+      'import/order': [
+        'warn',
+        {
+          groups: ['builtin', 'external', 'internal', 'parent', 'sibling', 'index'],
+          'newlines-between': 'always',
+          alphabetize: { order: 'asc', caseInsensitive: true },
+        },
+      ],
+      'node/no-process-exit': 'warn',
+      '@typescript-eslint/no-floating-promises': 'off',
       'sort-properties/sort-interface': 'warn',
       'sort-properties/sort-object-expression': [
         'warn',

@@ -5,7 +5,7 @@ export const useAdminAuth = () => {
   const login = async (email: string, password: string): Promise<boolean> => {
     try {
       // Supabase RPC로 bcrypt 검증
-      const { data, error } = await $fetch('/api/admin/login', {
+      const { data, error } = await $fetch<{ data: boolean; error: string }>('/api/admin/login', {
         body: { email, password },
         method: 'POST',
       })

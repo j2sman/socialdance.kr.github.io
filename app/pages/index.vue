@@ -6,7 +6,7 @@
         <h1 class="text-4xl md:text-6xl font-bold mb-6">
           {{ $t('home.hero.title') }}
         </h1>
-        <p class="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
+        <p class="text-xl text-neutral-600 mb-8 max-w-2xl mx-auto">
           {{ $t('home.hero.description') }}
         </p>
         <div class="flex flex-col sm:flex-row gap-4 justify-center">
@@ -24,11 +24,11 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
           <UCard>
             <div class="text-center">
-              <UIcon name="i-heroicons-users" class="w-12 h-12 text-blue-500 mx-auto mb-4" />
-              <h3 class="text-2xl font-bold text-blue-600">
+              <UIcon name="i-heroicons-users" class="w-12 h-12 text-success-500 mx-auto mb-4" />
+              <h3 class="text-2xl font-bold text-success-600">
                 {{ stats.clubs }}
               </h3>
-              <p class="text-gray-600">
+              <p class="text-neutral-600">
                 {{ $t('home.stats.registeredClubs') }}
               </p>
             </div>
@@ -37,12 +37,12 @@
             <div class="text-center">
               <UIcon
                 name="i-heroicons-building-office"
-                class="w-12 h-12 text-green-500 mx-auto mb-4"
+                class="w-12 h-12 text-primary-500 mx-auto mb-4"
               />
-              <h3 class="text-2xl font-bold text-green-600">
+              <h3 class="text-2xl font-bold text-primary-600">
                 {{ stats.bars }}
               </h3>
-              <p class="text-gray-600">
+              <p class="text-neutral-600">
                 {{ $t('home.stats.registeredBars') }}
               </p>
             </div>
@@ -53,7 +53,7 @@
               <h3 class="text-2xl font-bold text-red-600">
                 {{ stats.total }}
               </h3>
-              <p class="text-gray-600">
+              <p class="text-neutral-600">
                 {{ $t('home.stats.totalPlaces') }}
               </p>
             </div>
@@ -71,8 +71,8 @@
           <p>{{ $t('common.loading') }}</p>
         </div>
         <div v-else-if="recentClubs.length === 0" class="text-center py-8">
-          <UIcon name="i-heroicons-users" class="w-16 h-16 text-gray-400 mx-auto mb-4" />
-          <p class="text-gray-600">
+          <UIcon name="i-heroicons-users" class="w-16 h-16 text-neutral-400 mx-auto mb-4" />
+          <p class="text-neutral-600">
             {{ $t('clubs.noClubs') }}
           </p>
         </div>
@@ -95,14 +95,14 @@
               <UBadge
                 v-for="danceType in club.dance_types"
                 :key="danceType"
-                color="blue"
+                color="success"
                 variant="soft"
                 size="sm"
               >
                 {{ getDanceTypeLabel(danceType) }}
               </UBadge>
             </div>
-            <p class="text-sm text-gray-600">
+            <p class="text-sm text-neutral-600">
               {{ formatDate(club.created_at) }} {{ $t('home.registered') }}
             </p>
           </UCard>
@@ -124,8 +124,11 @@
           <p>{{ $t('common.loading') }}</p>
         </div>
         <div v-else-if="recentBars.length === 0" class="text-center py-8">
-          <UIcon name="i-heroicons-building-office" class="w-16 h-16 text-gray-400 mx-auto mb-4" />
-          <p class="text-gray-600">
+          <UIcon
+            name="i-heroicons-building-office"
+            class="w-16 h-16 text-neutral-400 mx-auto mb-4"
+          />
+          <p class="text-neutral-600">
             {{ $t('bars.noBars') }}
           </p>
         </div>
@@ -141,10 +144,10 @@
                 {{ bar.name }}
               </h3>
             </template>
-            <p class="text-gray-600 mb-2">
+            <p class="text-neutral-600 mb-2">
               {{ bar.address }}
             </p>
-            <p class="text-sm text-gray-500">
+            <p class="text-sm text-neutral-500">
               {{ formatDate(bar.created_at) }} {{ $t('home.registered') }}
             </p>
           </UCard>
@@ -160,6 +163,8 @@
 </template>
 
 <script setup lang="ts">
+import type { Club, LatinBar, DanceType } from '~/types'
+
 const { getClubs } = useClubs()
 const { getLatinBars } = useLatinBars()
 const { locale } = useI18n()
@@ -176,7 +181,7 @@ const stats = computed(() => ({
 
 const getDanceTypeLabel = (value: DanceType) => {
   const { getDanceTypeName } = useLocaleUtils()
-  return getDanceTypeName(value, locale.value)
+  return getDanceTypeName(value)
 }
 
 const formatDate = (dateString: string) => {

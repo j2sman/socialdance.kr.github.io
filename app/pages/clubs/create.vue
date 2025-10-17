@@ -5,7 +5,7 @@
         <div class="max-w-2xl mx-auto">
           <div class="mb-8">
             <h1 class="text-3xl font-bold mb-4">동호회 등록</h1>
-            <p class="text-gray-600">
+            <p class="text-neutral-600">
               새로운 동호회를 등록해주세요. 관리자 승인 후 사이트에 표시됩니다.
             </p>
           </div>
@@ -31,7 +31,7 @@
                 <UTextarea
                   v-model="form.description"
                   :placeholder="$t('clubs.descriptionPlaceholder')"
-                  rows="3"
+                  :rows="3"
                 />
               </UFormGroup>
 
@@ -40,7 +40,7 @@
                 <UTextarea
                   v-model="form.description_en"
                   :placeholder="$t('clubs.descriptionEnPlaceholder')"
-                  rows="3"
+                  :rows="3"
                 />
               </UFormGroup>
 
@@ -77,6 +77,8 @@
 </template>
 
 <script setup lang="ts">
+import type { ClubFormData } from '~/types'
+
 const { createClub } = useClubs()
 
 const form = reactive<ClubFormData>({
@@ -86,7 +88,7 @@ const form = reactive<ClubFormData>({
   description_en: '',
   dance_types: [],
   google_calendar_id: '',
-  social_links: [{ platform: '', url: '', password: '' }],
+  social_links: [{ platform: 'instagram', url: '', password: '' }],
   images: [],
 })
 
@@ -103,7 +105,7 @@ const onSubmit = async () => {
     await createClub(form)
     await navigateTo('/clubs/create/success')
   } catch (error) {
-    console.error('동호회 등록 실패:', error)
+  console.error('동호회 등록 실패:', error)
     // 에러 토스트 표시
   } finally {
     loading.value = false

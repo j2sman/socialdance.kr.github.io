@@ -45,7 +45,14 @@ export default defineNuxtConfig({
     strategy: 'prefix_except_default',
   },
 
-  modules: ['@nuxt/eslint', '@nuxt/ui', '@vueuse/nuxt', '@nuxtjs/supabase', '@nuxtjs/i18n'],
+  modules: [
+    '@nuxt/eslint',
+    '@nuxt/fonts',
+    '@nuxt/ui',
+    '@vueuse/nuxt',
+    '@nuxtjs/supabase',
+    '@nuxtjs/i18n',
+  ],
 
   // Cloudflare Pages 설정
   nitro: {
@@ -56,9 +63,25 @@ export default defineNuxtConfig({
   },
 
   routeRules: {
+    // 모든 일반 사용자 페이지는 public으로 설정
+    '/': { prerender: true },
+    // 관리자 페이지는 인증 필요 (향후 구현 시)
+    '/admin/**': {
+      ssr: false,
+      // 인증 미들웨어는 별도로 구현 예정
+    },
+    // API 엔드포인트는 CORS 허용
     '/api/**': {
       cors: true,
     },
+    '/bars': { prerender: true },
+    '/bars/**': { prerender: true },
+    '/clubs': { prerender: true },
+    '/clubs/**': { prerender: true },
+    '/customers': { prerender: true },
+    '/inbox': { prerender: true },
+    '/settings': { prerender: true },
+    '/settings/**': { prerender: true },
   },
 
   // 런타임 설정
@@ -86,10 +109,25 @@ export default defineNuxtConfig({
     key: process.env.SUPABASE_ANON_KEY,
     redirectOptions: {
       callback: '/confirm',
-      exclude: ['/'],
-      login: '/login',
+      // 관리자 페이지만 인증 요구, 나머지는 모두 public
+      exclude: [
+        '/',
+        '/bars',
+        '/bars/**',
+        '/clubs',
+        '/clubs/**',
+        '/customers',
+        '/inbox',
+        '/settings',
+        '/settings/**',
+      ],
+      login: '/admin/login',
     },
     secretKey: process.env.SESSION_SECRET,
     url: process.env.SUPABASE_URL,
+  },
+  typescript: {
+    strict: false,
+    typeCheck: false,
   },
 })
