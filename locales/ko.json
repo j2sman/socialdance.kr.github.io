@@ -1,0 +1,168 @@
+{
+  "common": {
+    "save": "저장",
+    "cancel": "취소",
+    "delete": "삭제",
+    "edit": "편집",
+    "add": "추가",
+    "search": "검색",
+    "filter": "필터",
+    "loading": "로딩 중...",
+    "error": "오류가 발생했습니다",
+    "success": "성공적으로 처리되었습니다",
+    "confirm": "확인",
+    "close": "닫기",
+    "back": "뒤로",
+    "next": "다음",
+    "previous": "이전",
+    "submit": "제출",
+    "reset": "초기화",
+    "yes": "예",
+    "no": "아니오"
+  },
+  "navigation": {
+    "home": "홈",
+    "clubs": "클럽",
+    "bars": "바",
+    "customers": "고객",
+    "inbox": "받은편지함",
+    "settings": "설정",
+    "dashboard": "대시보드"
+  },
+  "home": {
+    "title": "홈",
+    "welcome": "환영합니다",
+    "stats": "통계",
+    "sales": "매출",
+    "chart": "차트",
+    "period": "기간",
+    "dateRange": "날짜 범위",
+    "hero": {
+      "title": "라틴댄스의 모든 것",
+      "description": "전국의 라틴댄스 동호회와 라틴바를 한 곳에서 찾아보세요",
+      "findClubs": "동호회 찾기",
+      "findBars": "라틴바 찾기"
+    },
+    "stats": {
+      "registeredClubs": "등록된 동호회",
+      "registeredBars": "등록된 라틴바",
+      "totalPlaces": "총 라틴댄스 장소"
+    },
+    "recentClubs": {
+      "title": "최근 등록된 동호회"
+    },
+    "recentBars": {
+      "title": "최근 등록된 라틴바"
+    },
+    "registered": "등록",
+    "viewAllClubs": "모든 동호회 보기",
+    "viewAllBars": "모든 라틴바 보기"
+  },
+  "clubs": {
+    "title": "클럽",
+    "create": "클럽 생성",
+    "name": "클럽명",
+    "nameEn": "클럽명 (영어)",
+    "namePlaceholder": "클럽명을 입력해주세요",
+    "nameEnPlaceholder": "영어 클럽명을 입력해주세요 (선택사항)",
+    "description": "설명",
+    "descriptionEn": "설명 (영어)",
+    "descriptionPlaceholder": "클럽에 대한 설명을 입력해주세요",
+    "descriptionEnPlaceholder": "영어 설명을 입력해주세요 (선택사항)",
+    "danceTypes": "댄스 타입",
+    "status": "상태",
+    "approved": "승인됨",
+    "pending": "대기중",
+    "rejected": "거부됨",
+    "createSuccess": "클럽이 성공적으로 생성되었습니다",
+    "list": "클럽 목록",
+    "noClubs": "등록된 클럽이 없습니다"
+  },
+  "bars": {
+    "title": "라틴바",
+    "create": "라틴바 생성",
+    "name": "바 이름",
+    "address": "주소",
+    "mapProvider": "지도 제공자",
+    "status": "상태",
+    "approved": "승인됨",
+    "pending": "대기중",
+    "rejected": "거부됨",
+    "createSuccess": "라틴바가 성공적으로 생성되었습니다",
+    "list": "라틴바 목록",
+    "noBars": "등록된 라틴바가 없습니다"
+  },
+  "customers": {
+    "title": "고객",
+    "name": "이름",
+    "email": "이메일",
+    "phone": "전화번호",
+    "addCustomer": "고객 추가",
+    "editCustomer": "고객 편집",
+    "deleteCustomer": "고객 삭제",
+    "confirmDelete": "정말로 이 고객을 삭제하시겠습니까?",
+    "noCustomers": "등록된 고객이 없습니다"
+  },
+  "inbox": {
+    "title": "받은편지함",
+    "noMessages": "새로운 메시지가 없습니다",
+    "markAsRead": "읽음으로 표시",
+    "markAsUnread": "읽지 않음으로 표시",
+    "delete": "삭제",
+    "reply": "답장"
+  },
+  "settings": {
+    "title": "설정",
+    "general": "일반",
+    "members": "멤버",
+    "notifications": "알림",
+    "security": "보안",
+    "language": "언어",
+    "theme": "테마",
+    "saveSettings": "설정 저장"
+  },
+  "danceTypes": {
+    "salsa": "살사",
+    "bachata": "바차타",
+    "merengue": "메렝게",
+    "chaChaCha": "차차차",
+    "rumba": "룸바",
+    "samba": "삼바",
+    "jive": "자이브",
+    "pasoDoble": "파소도블레",
+    "waltz": "왈츠",
+    "tango": "탱고",
+    "foxtrot": "폭스트롯",
+    "quickstep": "퀵스텝"
+  },
+  "validation": {
+    "required": "필수 입력 항목입니다",
+    "email": "올바른 이메일 주소를 입력해주세요",
+    "phone": "올바른 전화번호를 입력해주세요",
+    "minLength": "최소 {min}자 이상 입력해주세요",
+    "maxLength": "최대 {max}자까지 입력 가능합니다"
+  },
+  "common": {
+    "latinDance": "라틴댄스",
+    "adminInquiry": "관리자 문의"
+  },
+  "footer": {
+    "about": {
+      "title": "라틴댄스 플랫폼",
+      "description": "전국의 라틴댄스 동호회와 라틴바를 한 곳에서 찾아보세요."
+    },
+    "links": {
+      "title": "빠른 링크",
+      "findClubs": "동호회 찾기",
+      "findBars": "라틴바 찾기",
+      "registerClub": "동호회 등록",
+      "registerBar": "라틴바 등록"
+    },
+    "contact": {
+      "title": "문의하기",
+      "description": "동호회나 라틴바 등록 관련 문의사항이 있으시면 연락주세요.",
+      "adminChat": "관리자 오픈카톡"
+    },
+    "copyright": "라틴댄스 플랫폼. All rights reserved."
+  }
+}

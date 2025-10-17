@@ -1,0 +1,82 @@
+---
+alwaysApply: true
+---
+
+# Development Guidelines
+
+## 프로젝트 개요
+
+- 본 프로젝트는 Nuxt3, TypeScript, TailwindCSS, Tauri(Rust) 기반의 웹/데스크탑 통합 프론트엔드이다.
+- 모든 개발 작업은 src/ 디렉터리 내에서 우선적으로 수행할 것.
+
+## 디렉터리/아키텍처 규칙
+
+### 주요 폴더별 역할 및 규칙
+
+- src/app/components/: UI 컴포넌트 추가/수정 시 반드시 src/app/pages/에서 라우팅 및 사용 여부 확인
+- src/app/pages/: 페이지 추가/수정 시 관련 components, stores, types, composables, assets를 동시 점검
+- src/app/stores/: 상태 관리 추가/수정 시 관련 페이지, 컴포넌트, types, utils와 연동 확인
+- src/app/types/: 타입 추가/수정 시 관련 stores, utils, api, 컴포넌트에서 참조 여부 확인
+- src/server/api/: API 추가/수정 시 관련 utils, types, stores, 클라이언트 호출부 동시 점검
+- src/server/utils/: 유틸 추가/수정 시 관련 api, stores, types, 컴포넌트에서 사용처 확인
+- src-tauri/: 데스크탑 빌드 관련. 프론트엔드 작업 시 src-tauri/는 임의로 수정 금지
+- public/: 정적 파일만 배치. 코드/로직 추가 금지
+- README.md, PROJECT_RULES.md: 문서 수정 시 반드시 동시 반영
+
+## 코드 규칙
+
+- 파일명, 변수명, 함수명은 카멜케이스(예: myFunction), 컴포넌트명은 파스칼케이스(예: MyComponent)로 작성
+- 모든 TypeScript 파일은 타입 명시 필수
+- 주석은 한글 또는 영어로 명확하게 작성, 불필요한 주석 금지
+- 불필요한 콘솔 로그, 디버깅 코드 커밋 금지
+
+## 기능 구현 기준
+
+- 컴포넌트 추가 시 반드시 props, emits, 타입 정의를 명확히 할 것
+- 페이지 추가 시 라우팅, 레이아웃, SEO 메타 정보 동시 점검
+- 스토어 추가 시 상태, 액션, 게터, 타입 정의를 명확히 할 것
+- API 추가 시 요청/응답 타입, 에러 처리, 인증/인가 로직 동시 점검
+- 유틸 추가 시 순수 함수로 작성, side effect 최소화
+- 타입 추가 시 중복 정의 금지, 공통 타입은 commonvar.ts에 우선 정의
+- 문서 파일(README.md 등) 수정 시 반드시 최신 상태로 유지
+
+## 외부 라이브러리 사용 기준
+
+- package.json에 명시된 버전만 사용, 임의 업그레이드/다운그레이드 금지
+- 신규 라이브러리 추가 시 반드시 팀 내 공유 및 승인 후 적용
+- 불필요한 라이브러리 의존성 추가 금지
+
+## 워크플로우
+
+- 모든 기능/버그 수정은 별도 브랜치에서 작업 후 PR 생성
+- 커밋 메시지는 [타입] 요약 - 상세 설명(선택) 형식으로 작성(예: [feat] 로그인 페이지 추가)
+- PR 병합 전 반드시 코드 리뷰 및 테스트 필수
+- 배포 전 output/ 디렉터리 내 산출물 최신화 확인
+
+## 주요 파일 동시 수정 규칙
+
+| 작업 유형          | 반드시 동시 수정해야 할 파일/폴더                  |
+| ------------------ | -------------------------------------------------- |
+| 컴포넌트 추가/수정 | src/app/components/, src/app/pages/                |
+| 페이지 추가/수정   | src/app/pages/, src/app/components/, stores, types |
+| API 추가/수정      | src/server/api/, src/server/utils/, types, stores  |
+| 타입 추가/수정     | src/app/types/, stores, utils, api, components     |
+| 문서 수정          | README.md, PROJECT_RULES.md                        |
+
+## AI 의사결정 기준
+
+- ambiguous 상황 발생 시, 관련 폴더/파일 전체를 우선 점검 후 가장 최근에 수정된 파일을 기준으로 작업할 것
+- 파일 충돌 시, src/app/ 내 파일을 우선시하며, src-tauri/는 마지막에 처리
+- 여러 파일 동시 수정 필요 시, 의존성 순서(타입→스토어→유틸→컴포넌트→페이지→API→문서)로 처리
+- 명확하지 않은 요청이 들어오면 반드시 코드베이스와 최근 변경사항을 우선 분석 후 작업 방향 결정
+
+## 금지사항 및 예시
+
+- src-tauri/ 내 파일은 프론트엔드 작업 시 임의로 수정 금지(예: Rust 코드, tauri.conf.json 등)
+- public/ 내 정적 파일 외 코드/로직 추가 금지
+- package.json, bun.lock 등 의존성 파일은 승인 없이 직접 수정 금지
+- 불필요한 주석, 콘솔 로그, 디버깅 코드 커밋 금지
+- 예시: "src/app/components/에 새 컴포넌트 추가 시 반드시 src/app/pages/에서 라우팅 확인 및 필요시 수정할 것."
+- 예시: "API 추가 시 src/server/api/, 관련 utils, types, stores, 클라이언트 호출부를 반드시 동시 점검할 것."
+
+**⚠️ 일반적인 개발 지식, 프레임워크 기본 규칙, LLM이 이미 알고 있는 내용은 절대 포함하지 말 것!**

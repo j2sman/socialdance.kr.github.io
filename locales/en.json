@@ -1,0 +1,168 @@
+{
+  "common": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "add": "Add",
+    "search": "Search",
+    "filter": "Filter",
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "success": "Successfully processed",
+    "confirm": "Confirm",
+    "close": "Close",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "submit": "Submit",
+    "reset": "Reset",
+    "yes": "Yes",
+    "no": "No"
+  },
+  "navigation": {
+    "home": "Home",
+    "clubs": "Clubs",
+    "bars": "Bars",
+    "customers": "Customers",
+    "inbox": "Inbox",
+    "settings": "Settings",
+    "dashboard": "Dashboard"
+  },
+  "home": {
+    "title": "Home",
+    "welcome": "Welcome",
+    "stats": "Statistics",
+    "sales": "Sales",
+    "chart": "Chart",
+    "period": "Period",
+    "dateRange": "Date Range",
+    "hero": {
+      "title": "Everything About Latin Dance",
+      "description": "Find Latin dance clubs and bars across the country in one place",
+      "findClubs": "Find Clubs",
+      "findBars": "Find Bars"
+    },
+    "stats": {
+      "registeredClubs": "Registered Clubs",
+      "registeredBars": "Registered Bars",
+      "totalPlaces": "Total Latin Dance Places"
+    },
+    "recentClubs": {
+      "title": "Recently Registered Clubs"
+    },
+    "recentBars": {
+      "title": "Recently Registered Bars"
+    },
+    "registered": "registered",
+    "viewAllClubs": "View All Clubs",
+    "viewAllBars": "View All Bars"
+  },
+  "clubs": {
+    "title": "Clubs",
+    "create": "Create Club",
+    "name": "Club Name",
+    "nameEn": "Club Name (Korean)",
+    "namePlaceholder": "Enter club name",
+    "nameEnPlaceholder": "Enter Korean club name (optional)",
+    "description": "Description",
+    "descriptionEn": "Description (Korean)",
+    "descriptionPlaceholder": "Enter club description",
+    "descriptionEnPlaceholder": "Enter Korean description (optional)",
+    "danceTypes": "Dance Types",
+    "status": "Status",
+    "approved": "Approved",
+    "pending": "Pending",
+    "rejected": "Rejected",
+    "createSuccess": "Club created successfully",
+    "list": "Club List",
+    "noClubs": "No clubs registered"
+  },
+  "bars": {
+    "title": "Latin Bars",
+    "create": "Create Latin Bar",
+    "name": "Bar Name",
+    "address": "Address",
+    "mapProvider": "Map Provider",
+    "status": "Status",
+    "approved": "Approved",
+    "pending": "Pending",
+    "rejected": "Rejected",
+    "createSuccess": "Latin bar created successfully",
+    "list": "Latin Bar List",
+    "noBars": "No Latin bars registered"
+  },
+  "customers": {
+    "title": "Customers",
+    "name": "Name",
+    "email": "Email",
+    "phone": "Phone",
+    "addCustomer": "Add Customer",
+    "editCustomer": "Edit Customer",
+    "deleteCustomer": "Delete Customer",
+    "confirmDelete": "Are you sure you want to delete this customer?",
+    "noCustomers": "No customers registered"
+  },
+  "inbox": {
+    "title": "Inbox",
+    "noMessages": "No new messages",
+    "markAsRead": "Mark as Read",
+    "markAsUnread": "Mark as Unread",
+    "delete": "Delete",
+    "reply": "Reply"
+  },
+  "settings": {
+    "title": "Settings",
+    "general": "General",
+    "members": "Members",
+    "notifications": "Notifications",
+    "security": "Security",
+    "language": "Language",
+    "theme": "Theme",
+    "saveSettings": "Save Settings"
+  },
+  "danceTypes": {
+    "salsa": "Salsa",
+    "bachata": "Bachata",
+    "merengue": "Merengue",
+    "chaChaCha": "Cha Cha Cha",
+    "rumba": "Rumba",
+    "samba": "Samba",
+    "jive": "Jive",
+    "pasoDoble": "Paso Doble",
+    "waltz": "Waltz",
+    "tango": "Tango",
+    "foxtrot": "Foxtrot",
+    "quickstep": "Quickstep"
+  },
+  "validation": {
+    "required": "This field is required",
+    "email": "Please enter a valid email address",
+    "phone": "Please enter a valid phone number",
+    "minLength": "Please enter at least {min} characters",
+    "maxLength": "Maximum {max} characters allowed"
+  },
+  "common": {
+    "latinDance": "Latin Dance",
+    "adminInquiry": "Admin Inquiry"
+  },
+  "footer": {
+    "about": {
+      "title": "Latin Dance Platform",
+      "description": "Find Latin dance clubs and bars across the country in one place."
+    },
+    "links": {
+      "title": "Quick Links",
+      "findClubs": "Find Clubs",
+      "findBars": "Find Bars",
+      "registerClub": "Register Club",
+      "registerBar": "Register Bar"
+    },
+    "contact": {
+      "title": "Contact Us",
+      "description": "Please contact us if you have any questions about club or bar registration.",
+      "adminChat": "Admin KakaoTalk"
+    },
+    "copyright": "Latin Dance Platform. All rights reserved."
+  }
+}
